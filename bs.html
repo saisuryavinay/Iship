@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Bubble Sort</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            line-height: 1.6;
+        }
+        
+        h1,
+        h2 {
+            color: #2c3e50;
+        }
+        
+        ul {
+            margin-top: 0;
+        }
+        
+        pre {
+            background-color: #f4f4f4;
+            padding: 10px;
+            border-left: 4px solid #3498db;
+            overflow-x: auto;
+        }
+        
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 15px;
+        }
+        
+        th,
+        td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: left;
+        }
+        
+        th {
+            background-color: #ecf0f1;
+        }
+        .hide {
+            display: none;
+        }
+        #cpp {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Bubble Sort</h1>
+
+    <h2>Definition</h2>
+    <p>
+        Bubble Sort is a basic comparison-based sorting algorithm. It works by repeatedly stepping through the list, comparing adjacent elements, and swapping them if they are in the wrong order. This process is repeated until no swaps are needed, indicating
+        that the list is sorted.</p>
+
+    <ul>
+        <li>Bubble Sort is a simple sorting algorithm.</li>
+        <li>It works by repeatedly swapping adjacent elements if they are in the wrong order.</li>
+        <li>Smaller elements gradually "bubble" to the top of the list with each pass.</li>
+        <li>It is not suitable for large datasets due to high time complexity.</li>
+        <li>It's easy to understand and implement.</li>
+        <li>It is a stable sort — maintains the relative order of equal elements.</li>
+        <li>Works well for small or nearly sorted datasets.</li>
+    </ul>
+
+    <h2>Use Cases</h2>
+    <ul>
+        <li>Good for teaching and educational purposes.</li>
+        <li>Useful when the array is nearly sorted.</li>
+        <li>Helps demonstrate basic sorting logic.</li>
+    </ul>
+
+    <h2>Example</h2>
+    <p>Consider the array <code>[5, 3, 8, 4]</code>:</p>
+    <ul>
+        <li>Step 1: Compare 5 and 3 → Swap → [3, 5, 8, 4]</li>
+        <li>Step 2: Compare 5 and 8 → No Swap → [3, 5, 8, 4]</li>
+        <li>Step 3: Compare 8 and 4 → Swap → [3, 5, 4, 8]</li>
+        <li>Repeat the process until the array is fully sorted.</li>
+    </ul>
+    <div class="code">
+    <h2>
+        <button onclick="showCpp()" id="cpp">CPP</button>
+        <button onclick="showJava()" id="java">Java</button>
+        <button onclick="showPython()" id="python">Python</button>
+    </h2>
+    <pre class="cpp">
+void bubbleSort(int arr[], int n) {
+    for (int i = 0; i < n - 1; i++) {
+        for (int j = 0; j < n - i - 1; j++) {
+            if (arr[j] > arr[j + 1]) {
+                int temp = arr[j];
+                arr[j] = arr[j + 1];
+                arr[j + 1] = temp;
+            }
+        }
+    }
+}
+  </pre>
+
+    <pre class="java hide">
+class BubbleSort {
+    public static void bubbleSort(int[] arr) {
+        for (int i = 0; i < arr.length - 1; i++) {
+            for (int j = 0; j < arr.length - i - 1; j++) {
+                if (arr[j] > arr[j + 1]) {
+                    int temp = arr[j];
+                    arr[j] = arr[j + 1];
+                    arr[j + 1] = temp;
+                }
+            }
+        }
+    }
+}
+  </pre>
+
+    <pre class="python hide">
+def bubble_sort(arr):
+    n = len(arr)
+    for i in range(n):
+        for j in range(0, n - i - 1):
+            if arr[j] > arr[j + 1]:
+                arr[j], arr[j + 1] = arr[j + 1], arr[j]
+  </pre>
+
+  </div>
+    <h2>Complexities</h2>
+    <table>
+        <tr>
+            <th>Type</th>
+            <th>Time</th>
+            <th>Meaning</th>
+        </tr>
+        <tr>
+            <td>Best Case</td>
+            <td>O(n)</td>
+            <td>Array is already sorted.</td>
+        </tr>
+        <tr>
+            <td>Average Case</td>
+            <td>O(n<sup>2</sup>)</td>
+            <td>Random order of elements.</td>
+        </tr>
+        <tr>
+            <td>Worst Case</td>
+            <td>O(n<sup>2</sup>)</td>
+            <td>Array is sorted in reverse order.</td>
+        </tr>
+        <tr>
+            <td>Space Complexity</td>
+            <td>O(1)</td>
+            <td>Sorting is done in-place.</td>
+        </tr>
+    </table>
+
+    <h2>Advantages</h2>
+    <ul>
+        <li>Very simple and easy to implement.</li>
+        <li>No additional memory required.</li>
+        <li>Stable sort (preserves order of equal elements).</li>
+    </ul>
+
+    <h2>Disadvantages</h2>
+    <ul>
+        <li>Not efficient for large datasets.</li>
+        <li>Time complexity is high in average and worst case.</li>
+        <li>Not used in practical applications for performance-critical tasks.</li>
+    </ul>
+    <script>
+        const cpp = document.getElementsByClassName("cpp")[0];
+        const java = document.getElementsByClassName("java")[0];
+        const python = document.getElementsByClassName("python")[0];
+        const cppTxt = document.getElementById("cpp");
+        const javaTxt = document.getElementById("java");
+        const pythonTxt = document.getElementById("python");
+        function showCpp() {
+            if(!cpp.classList.contains("hide")) return;
+            cpp.classList.remove("hide");
+            java.classList.add("hide");
+            python.classList.add("hide");
+            cppTxt.style.color = "red";
+            pythonTxt.style.color = "black";
+            javaTxt.style.color = "black";
+        }
+        function showJava() {
+            if(!java.classList.contains("hide")) return;
+            java.classList.remove("hide");
+            cpp.classList.add("hide");
+            python.classList.add("hide");
+            javaTxt.style.color = "red";
+            pythonTxt.style.color = "black";
+            cppTxt.style.color = "black";
+        }
+        function showPython() {
+            if(!python.classList.contains("hide")) return;
+            python.classList.remove("hide");
+            java.classList.add("hide");
+            cpp.classList.add("hide");
+            pythonTxt.style.color = "red";
+            javaTxt.style.color = "black";
+            cppTxt.style.color = "black";
+        }
+
+    </script>
+</body>
+
+</html>

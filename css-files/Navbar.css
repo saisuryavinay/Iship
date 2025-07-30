@@ -1,0 +1,38 @@
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.navbar {
+  padding: 0 40px;
+  display: flex;
+  background-color: #021028;
+  justify-content: space-between;
+  align-items: center;
+  color: white;
+  font-family: Arial, Helvetica, sans-serif;
+  height: 80px;
+  box-shadow: 0 0 10px #00000080;
+}
+
+img {
+  width: 120px;
+}
+
+.menu {
+  display: flex;
+  gap: 20px;
+}
+
+.menu a {
+  text-decoration: none;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 5px;
+}
+
+.menu a:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}

@@ -1,0 +1,114 @@
+body {
+    background-color: #04153f;
+}
+
+.logo {
+    /* color: transparent; */
+    background: none;
+    border: none;
+    animation-name: anime;
+    animation-duration: 3s;
+    animation-iteration-count: infinite;
+    animation-fill-mode: forwards;
+    filter: drop-shadow(0 0 1px #ffffff8a);
+    height: 60px;
+    width: auto;
+}
+
+.lc {
+    position: absolute;
+    top: 200px;
+    left: 100px;
+}
+
+@keyframes anime {
+    0% {
+        transform: translate3d(0, 0, 0);
+    }
+    50% {
+        transform: translate3d(0px, -5px, 0);
+    }
+    100% {
+        transform: translate3d(0, 0, 0);
+    }
+}
+
+.gfg {
+    /* color: transparent; */
+    background: none;
+    border: none;
+    height: 30px;
+    width: auto;
+    position: absolute;
+    top: 400px;
+    left: 150px;
+}
+
+.hr {
+    position: absolute;
+    bottom: 70px;
+    left: 350px;
+}
+
+.hero-title {
+    height: 100%;
+    width: 100%;
+    padding: 200px 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-size: 1.5rem;
+    text-align: center;
+    color: rgb(184, 24, 24);
+    filter: drop-shadow(0 0 0.5px #ffffff);
+    animation-name: anime;
+    animation-duration: 3s;
+    animation-iteration-count: infinite;
+    animation-fill-mode: forwards;
+}
+
+.cpp {
+    position: absolute;
+    top: 200px;
+    right: 100px;
+}
+
+.python {
+    position: absolute;
+    top: 400px;
+    right: 150px;
+}
+
+.java {
+    position: absolute;
+    bottom: 70px;
+    right: 350px;
+}
+
+.why-us {
+    margin: 80px auto;
+    font-size: 1.5rem;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.why-us ul{
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.why-us li {
+    display: flex;
+}
+
+img {
+    width: 30px;
+    height: auto;
+    display: block;
+    margin-right: 10px;
+    filter: saturate(1.5) drop-shadow(0 0 1.2px #ffffff8a) brightness(1.2);
+}

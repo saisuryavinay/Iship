@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0"
+        />
+        <title>Responsive Sidebar</title>
+        <link
+            rel="stylesheet"
+            href="./css-files/Learn.css"
+        />
+    </head>
+    <body>
+        <!-- Sidebar -->
+        <div class="container">
+            <div
+                class="sidebar collapsed"
+                id="sidebar"
+            >
+                <h2>Topics</h2>
+                <div class="accordion">
+                    <button class="accordion-btn">Arrays <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M480-344 240-584l56-56 184 184 184-184 56 56-240 240Z"/></svg></button>
+                    <div class="accordion-opts">
+                        <a href="#">Edit Profile</a>
+                        <a href="#">View Stats</a>
+                    </div>
+                </div>
+
+                <div class="accordion">
+                    <button class="accordion-btn">Strings <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M480-344 240-584l56-56 184 184 184-184 56 56-240 240Z"/></svg></button>
+                    <div class="accordion-opts">
+                        <a href="#">Inbox</a>
+                        <a href="#">Sent</a>
+                        <a href="#">Archived</a>
+                    </div>
+                </div>
+            </div>
+
+            <div
+                class="toggle-btn"
+                id="toggleBtn"
+                onclick="toggleSidebar()"
+            ></div>
+
+            <div class="content">
+                <iframe
+                    src="./bubblesort.html"
+                    frameborder="0"
+                ></iframe>
+            </div>
+        </div>
+
+        <script>
+            const sidebar = document.getElementById("sidebar");
+            const toggleBtn = document.getElementById("toggleBtn");
+
+            function updateToggleIcon() {
+                toggleBtn.innerHTML = sidebar.classList.contains("collapsed")
+                    ? "&#x3e;"
+                    : "&#x3c;";
+            }
+
+            function toggleSidebar() {
+                sidebar.classList.toggle("collapsed");
+                toggleBtn.classList.toggle("collapsed");
+                updateToggleIcon();
+            }
+
+            function setInitialSidebarState() {
+                if (window.innerWidth <= 768) {
+                    sidebar.classList.add("collapsed");
+                    toggleBtn.classList.remove("collapsed");
+                } else {
+                    sidebar.classList.remove("collapsed");
+                    toggleBtn.classList.add("collapsed");
+                }
+                updateToggleIcon();
+            }
+
+            window.addEventListener("resize", setInitialSidebarState);
+            window.addEventListener("DOMContentLoaded", setInitialSidebarState);
+            document.addEventListener("DOMContentLoaded", function () {
+                const accButtons = document.querySelectorAll(".accordion-btn");
+                accButtons.forEach((btn) => {
+                    btn.addEventListener("click", function () {
+                        accButtons.forEach((b) => {
+                            if (b !== btn) b.classList.remove("active");
+                            if (b !== btn)
+                                b.nextElementSibling.style.display = "none";
+                        });
+
+                        btn.classList.toggle("active");
+                        const opts = btn.nextElementSibling;
+                        if (opts.style.display === "flex") {
+                            opts.style.display = "none";
+                        } else {
+                            opts.style.display = "flex";
+                        }
+                    });
+                });
+            });
+        </script>
+    </body>
+</html>

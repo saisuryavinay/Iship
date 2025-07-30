@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0"
+        />
+        <link
+            rel="stylesheet"
+            href="./css-files/App.css"
+        />
+        <title>DSA Pulse</title>
+    </head>
+    <body>
+        <div class="App">
+            <div class="navbar">
+                <a href="/">
+                    <img src="./assets/logo.png" />
+                </a>
+                <div class="menu">
+                    <a class="./Home.html">Home</a>
+                    <a class="./learn.html">Learn</a>
+                    <a class="./contact.html">Contact</a>
+                    <a class="./login.html" id="login"></a>
+                </div>
+            </div>
+            <iframe src="./Home.html" frameborder="0"></iframe>
+        </div>
+        <script>
+            const links = document.querySelectorAll('.menu a');
+            links.forEach(link => {
+                link.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    const target = this.getAttribute('class');
+                    document.querySelector('iframe').src = target;
+                });
+            });
+
+            const loginLink = document.getElementById('login');
+            loginLink.innerHTML = localStorage.getItem('loggedInUserName') || 'Sign in';
+        </script>
+    </body>
+</html>
