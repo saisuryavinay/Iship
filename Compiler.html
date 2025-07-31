@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Compiler - Level up dev</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&family=Roboto+Mono&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        margin: 0;
+        font-family: "Poppins", sans-serif;
+        background: #04153f;
+        color: white;
+        height: 100vh;
+        overflow: hidden;
+      }
+
+      .container {
+        display: flex;
+        height: 100%;
+      }
+
+      .editor-panel,
+      .output-panel {
+        width: 50%;
+        padding: 20px;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      .panel-title {
+        margin: 0;
+        font-size: 1.5rem;
+      }
+
+      .tabs {
+        display: flex;
+        gap: 10px;
+        flex-shrink: 0;
+      }
+
+      .tab-button {
+        padding: 8px 16px;
+        background-color: #1e006e;
+        border: 1px solid #00ffe1;
+        border-radius: 5px;
+        color: white;
+        font-weight: bold;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .tab-button.active {
+        background-image: linear-gradient(145deg, #00fff7, #6e00ff);
+        color: #04153f;
+        border-color: #00fff7;
+      }
+
+      .code-editor-area {
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+      }
+
+      textarea {
+        width: 100%;
+        flex-grow: 1;
+        padding: 15px;
+        box-sizing: border-box;
+        resize: none;
+        border: 1px solid #4a5568;
+        background-color: #0d1117;
+        color: #e2e8f0;
+        font-size: 1rem;
+        font-family: "Roboto Mono", monospace;
+        border-radius: 8px;
+        display: none; /* Hide all textareas by default */
+      }
+
+      textarea.active {
+        display: block; /* Show only the active one */
+      }
+
+      #output-frame {
+        width: 100%;
+        height: 100%;
+        border: none;
+        background-color: white;
+        border-radius: 8px;
+        flex-grow: 1;
+      }
+
+      .run-buttons {
+        display: flex;
+        gap: 10px;
+        margin-top: 15px;
+      }
+
+      .run-btn {
+        padding: 12px;
+        background: #1e006e;
+        border: 1px solid #00ffe1;
+        border-radius: 8px;
+        color: white;
+        font-weight: bold;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .run-btn:hover {
+        background: linear-gradient(145deg, #00fff7, #6e00ff);
+        color: #04153f;
+      }
+
+      /* --- Responsive Design for Mobile --- */
+      @media (max-width: 768px) {
+        body {
+          height: auto; /* Allow scrolling on mobile */
+          overflow: visible;
+        }
+        .container {
+          flex-direction: column; /* Stack panels vertically */
+          height: auto;
+        }
+        .editor-panel,
+        .output-panel {
+          width: 100%;
+          height: 50vh; /* Each panel takes half the viewport height */
+        }
+        .panel-title {
+          font-size: 1.2rem;
+        }
+        .editor-panel {
+          /* Ensure editor panel has a minimum height */
+          min-height: 400px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="editor-panel">
+        <h2 class="panel-title">Code Editor</h2>
+        <div class="tabs">
+          <button class="tab-button active" onclick="showCodePanel('html')">
+            HTML
+          </button>
+          <button class="tab-button" onclick="showCodePanel('css')">CSS</button>
+          <button class="tab-button" onclick="showCodePanel('js')">JS</button>
+        </div>
+        <div class="code-editor-area">
+          <textarea
+            id="html-code"
+            class="active"
+            placeholder="Write HTML here..."
+          ></textarea>
+          <textarea id="css-code" placeholder="Write CSS here..."></textarea>
+          <textarea id="js-code" placeholder="Write JS here..."></textarea>
+        </div>
+        <div class="run-buttons">
+          <button class="run-btn" onclick="runLive()">Run</button>
+          <button class="run-btn" onclick="runInNewPage()">
+            Run in New Page
+          </button>
+        </div>
+      </div>
+      <div class="output-panel">
+        <h2 class="panel-title">Output</h2>
+        <iframe id="output-frame"></iframe>
+      </div>
+    </div>
+
+    <script>
+      const codePanels = {
+        html: document.getElementById("html-code"),
+        css: document.getElementById("css-code"),
+        js: document.getElementById("js-code"),
+      };
+      const codeTabs = document.querySelectorAll(".editor-panel .tab-button");
+      const outputFrame = document.getElementById("output-frame");
+
+      // Create a communication channel named 'code_updates'
+      const channel = new BroadcastChannel("code_updates");
+
+      function showCodePanel(panelId) {
+        Object.values(codePanels).forEach((panel) =>
+          panel.classList.remove("active")
+        );
+        codePanels[panelId].classList.add("active");
+
+        codeTabs.forEach((tab) => {
+          tab.classList.toggle(
+            "active",
+            tab.textContent.toLowerCase() === panelId
+          );
+        });
+      }
+
+      function buildUserCode() {
+        const html = codePanels.html.value;
+        const css = codePanels.css.value;
+        const js = codePanels.js.value;
+        return `
+                <!DOCTYPE html>
+                <html>
+                <head><style>${css}</style></head>
+                <body>
+                    ${html}
+                    <script>${js}<\/script>
+                </body>
+                </html>
+            `;
+      }
+
+      function runLive() {
+        const userCode = buildUserCode();
+        // Update the local iframe
+        outputFrame.srcdoc = userCode;
+        // Send the new code to any other open tabs (like our pop-up)
+        channel.postMessage(userCode);
+      }
+
+      function runInNewPage() {
+        const userCode = buildUserCode();
+
+        // This is the special code for the new page. It includes a listener.
+        const newPageContent = `
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <title>Level up dev - Output</title>
+                    <style>body,html{margin:0;padding:0;height:100%;width:100%;}</style>
+                </head>
+                <body>
+                    ${userCode}
+                    <script>
+                        // This script runs inside the new window
+                        const channel = new BroadcastChannel('code_updates');
+                        
+                        // Listen for messages from the main editor
+                        channel.onmessage = (event) => {
+                            // When a message is received, rewrite the page with the new code
+                            document.open();
+                            document.write(event.data);
+                            document.close();
+                        };
+                    <\/script>
+                </body>
+                </html>
+            `;
+
+        const newWindow = window.open();
+        newWindow.document.open();
+        newWindow.document.write(newPageContent);
+        newWindow.document.close();
+      }
+
+      showCodePanel("html");
+    </script>
+  </body>
+</html>

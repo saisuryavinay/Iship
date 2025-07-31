@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Task Page with Dual Run</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #04153F;
+      color: white;
+    }
+
+    .container {
+      display: flex;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .left,
+    .right {
+      width: 50%;
+      padding: 20px;
+      box-sizing: border-box;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .left-tabs {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .left-tab-button {
+      color: white;
+      font-weight: bold;
+      padding: 8px 16px;
+      background-color: #1E006E;
+      border: 1px solid #00FFE1;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .left-tab-button.active {
+      background-color: #00FFE1;
+      color: #04153F;
+    }
+
+    .tab-content {
+      background: #121E3A;
+      padding: 15px;
+      border-radius: 10px;
+      display: none;
+      color: #D1D5DB;
+      line-height: 1.6;
+      height: calc(100vh - 100px);
+      overflow-y: auto;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    #output {
+      padding: 0;
+      background: none;
+    }
+
+    #output iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      background: white;
+      border-radius: 6px;
+    }
+
+    .right h3 {
+      color: white;
+    }
+
+    .sec {
+      height: 25px;
+      margin-bottom: 10px;
+      display: flex;
+      gap: 5px;
+    }
+
+    .button {
+      color: white;
+      font-weight: bold;
+      width: 110px;
+      height: 31px;
+      border: 1px solid gray;
+      background: #1E006E;
+      cursor: pointer;
+      border-radius: 5px;
+      transition: 0.3s;
+    }
+
+    .button:hover {
+      background-color: #00FFE1;
+      border: 0;
+      color: #04153F;
+    }
+
+    .curr {
+      border: 2px solid #00FFE1;
+      background: #1E006E;
+      color: white;
+    }
+
+    .hide {
+      display: none;
+    }
+
+    textarea {
+      width: 95%;
+      height: 65vh;
+      padding: 10px;
+      resize: none;
+      border: 1px solid rgb(192, 188, 188);
+      background-color: hsl(224, 82%, 12%);
+      color: white;
+      font-size: 1rem;
+      font-family: monospace;
+      border-radius: 6px;
+      margin-bottom: 10px;
+    }
+
+    textarea::placeholder {
+      color: white;
+    }
+
+    .run {
+      color: white;
+      font-weight: bold;
+      width: 140px;
+      height: 35px;
+      background: #1E006E;
+      border-radius: 8px;
+      border: 1px solid #00FFE1;
+      cursor: pointer;
+      margin-right: 10px;
+    }
+
+    .run:hover {
+      background-color: #00FFE1;
+      color: #04153F;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Left Panel -->
+    <div class="left">
+      <div class="left-tabs">
+        <button class="left-tab-button active" onclick="showTab('description')">Description</button>
+        <button class="left-tab-button" onclick="showTab('output')">Output</button>
+        <button class="left-tab-button" onclick="showTab('editorial')">Editorial</button>
+      </div>
+
+      <div id="description" class="tab-content active">
+        <h2>Problem Statement</h2>
+        <p><strong>Title:</strong> Print "To-do List"</p>
+        <p><strong>Description:</strong><br/>You are required to build a simple web-based To-Do List application using HTML, CSS, and JavaScript where users can type in tasks they want to remember, add them to a visible list, mark them as completed when done, and delete them if no longer needed; the interface should be clean and user-friendly, and the interactivity should happen without reloading the page.
+        </p>
+        <p><strong>Constraints:</strong></p>
+        <ul>
+          <li>The application must allow users to add tasks dynamically using an input field and a button.</li>
+            <li>Clicking on a task must visually mark it as completed (e.g., using a strikethrough or color change).</li>
+            <li>Each task should have a delete option to remove it from the list.</li>
+
+        </ul>
+      </div>
+
+      <div id="output" class="tab-content">
+        <iframe id="user-output"></iframe>
+      </div>
+
+      <div id="editorial" class="tab-content">
+        <h2>Editorial (Coming Soon)</h2>
+        <p>This section will include the explanation and ideal approach for solving the problem.</p>
+      </div>
+    </div>
+
+    <!-- Right Panel -->
+    <div class="right">
+      <h3>🛠 Code Editor</h3>
+      <div class="sec">
+        <button class="html button curr" onclick="showHtml()">HTML</button>
+        <button class="css button" onclick="showCSS()">CSS</button>
+        <button class="js button" onclick="showJS()">JS</button>
+      </div>
+
+      <textarea id="html-code" placeholder="Write HTML here..."></textarea>
+      <textarea id="css-code" class="hide" placeholder="Write CSS here..."></textarea>
+      <textarea id="js-code" class="hide" placeholder="Write JS here..."></textarea>
+
+      <div>
+        <button onclick="runCode()" class="run">Run</button>
+        <button onclick="runInNewPage()" class="run">Run in New Page</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let externalWindow = null;
+
+    function showHtml() {
+      document.getElementById("html-code").classList.remove("hide");
+      document.getElementById("css-code").classList.add("hide");
+      document.getElementById("js-code").classList.add("hide");
+
+      const buttons = document.getElementsByClassName("button");
+      buttons[0].classList.add("curr");
+      buttons[1].classList.remove("curr");
+      buttons[2].classList.remove("curr");
+    }
+
+    function showCSS() {
+      document.getElementById("css-code").classList.remove("hide");
+      document.getElementById("html-code").classList.add("hide");
+      document.getElementById("js-code").classList.add("hide");
+
+      const buttons = document.getElementsByClassName("button");
+      buttons[1].classList.add("curr");
+      buttons[0].classList.remove("curr");
+      buttons[2].classList.remove("curr");
+    }
+
+    function showJS() {
+      document.getElementById("js-code").classList.remove("hide");
+      document.getElementById("css-code").classList.add("hide");
+      document.getElementById("html-code").classList.add("hide");
+
+      const buttons = document.getElementsByClassName("button");
+      buttons[2].classList.add("curr");
+      buttons[0].classList.remove("curr");
+      buttons[1].classList.remove("curr");
+    }
+
+    function buildUserCode() {
+      const html = document.getElementById("html-code").value;
+      const css = document.getElementById("css-code").value;
+      const js = document.getElementById("js-code").value;
+
+      return `
+        <!DOCTYPE html>
+        <html>
+        <head>
+          <style>${css}</style>
+        </head>
+        <body>
+          ${html}
+          <script>${js.replace(/<\/script>/g, "<\\/script>")}<\/script>
+        </body>
+        </html>
+      `;
+    }
+
+    function runCode() {
+      const userCode = buildUserCode();
+      const iframe = document.getElementById("user-output");
+      iframe.srcdoc = userCode;
+      showTab('output');
+
+      if (externalWindow && !externalWindow.closed) {
+        externalWindow.document.open();
+        externalWindow.document.write(userCode);
+        externalWindow.document.close();
+      }
+    }
+
+    function runInNewPage() {
+      const userCode = buildUserCode();
+      externalWindow = window.open();
+      if (externalWindow) {
+        externalWindow.document.open();
+        externalWindow.document.write(userCode);
+        externalWindow.document.close();
+      } else {
+        alert("Popup blocked! Please allow popups for this site.");
+      }
+    }
+
+    function showTab(tabId) {
+      const contents = document.querySelectorAll('.tab-content');
+      const buttons = document.querySelectorAll('.left-tab-button');
+      contents.forEach(c => c.classList.remove('active'));
+      buttons.forEach(b => b.classList.remove('active'));
+      document.getElementById(tabId).classList.add('active');
+      event.target.classList.add('active');
+    }
+  </script>
+</body>
+</html>

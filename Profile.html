@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile - Level up dev</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./css-files/Profile.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Playwrite+AU+QLD:wght@100..400&family=Quicksand:wght@300..700&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&family=Varela+Round&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="profile-container">
+        <header class="profile-header">
+            <div class="cover">
+                <span id="quote">Learning development is like learning a superpower—practice, and soon you’ll bend reality with your logic.</span>
+            </div>
+            <div class="profile-info">
+                <img src="./assets/profile.png" alt="User Profile Picture" class="profile-picture">
+                <div class="user-details">
+                    <h1 id="username"></h1>
+                </div>
+            </div>
+        </header>
+
+        <main class="profile-body">
+            <div class="stats-card">
+                <div class="parent">
+                    <div class="child">
+                            <h3>Solved</h3>
+                            <h1>2 / 9</h1>
+                            <h3>All Tasks</h3>
+                    </div>
+                    <div class="child">
+                            <h3>Solved</h3>
+                            <h1>1 / 3</h1>
+                            <h3>Easy</h3>
+                    </div>
+                    <div class="child">
+                            <h3>Solved</h3>
+                            <h1>1 / 3</h1>
+                            <h3>Medium</h3>
+                    </div>
+                    <div class="child">
+                            <h3>Solved</h3>
+                            <h1>0 / 3</h1>
+                            <h3>Hard</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="last-sub">
+                <section class="task-card">
+                    <h1 class="card-title">Recently Completed Task</h1>
+                    <h3 id="last-task"></h3>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+
+    <script>
+        
+            const quotes = [
+            "Every line of code you write is a step toward building the future—yours and the world's.",
+            "Don’t just learn to code—learn to create, solve, and transform.",
+            "Start where you are. Build what you dream. Learn as you go.",
+            "Development isn’t just about syntax—it’s about solving real problems with logic and creativity.",
+            "From bugs to breakthroughs—growth happens in the debug.",
+            "You don’t need to know everything to start. You need to start to know everything.",
+            "Learning development is like learning a superpower—practice, and soon you’ll bend reality with your logic.",
+            "Code is the language of innovation. Learn it, speak it, and shape the world.",
+            "Great developers weren’t born great—they just never stopped learning.",
+            "Build skills. Break limits. Become the developer you were meant to be."
+            ];
+            localStorage.setItem("quotes",JSON.stringify(quotes));
+        document.getElementById('username').innerHTML = `${localStorage.getItem('loggedInUserName')}`;
+        document.getElementById('quote').innerHTML = `${JSON.parse(localStorage.getItem('quotes'))[Math.floor(Math.random()*10)]}`;
+
+        const lastTask = document.getElementById('last-task');
+        lastTask.innerHTML = localStorage.getItem('last_submitted');
+    </script>
+</body>
+</html>

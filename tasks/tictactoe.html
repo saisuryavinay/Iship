@@ -1,0 +1,927 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Task Page with Dual Run</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #04153F;
+      color: white;
+    }
+
+    .container {
+      display: flex;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .left,
+    .right {
+      width: 50%;
+      padding: 20px;
+      box-sizing: border-box;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .left-tabs {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .left-tab-button {
+      color: white;
+      font-weight: bold;
+      padding: 8px 16px;
+      background-color: #1E006E;
+      border: 1px solid #00FFE1;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .left-tab-button.active {
+      background-image: linear-gradient(145deg, #00FFF7, #6E00FF);
+      color: #04153F;
+    }
+
+    .tab-content {
+      background: #121E3A;
+      padding: 15px;
+      border-radius: 10px;
+      display: none;
+      color: #D1D5DB;
+      line-height: 1.6;
+      height: calc(100vh - 100px);
+      overflow-y: auto;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    #output {
+      padding: 0;
+      background: none;
+    }
+
+    #output iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      background: white;
+      border-radius: 6px;
+    }
+
+    .right h3 {
+      color: white;
+    }
+
+    .sec {
+      height: 25px;
+      margin-bottom: 10px;
+      display: flex;
+      gap: 5px;
+    }
+
+    .button {
+      color: white;
+      font-weight: bold;
+      width: 110px;
+      height: 31px;
+      border: 1px solid gray;
+      background: #1E006E;
+      cursor: pointer;
+      border-radius: 5px;
+      transition: 0.3s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+    }
+
+    .button img {
+      height: 18px;
+      width: 18px;
+    }
+    .button:hover {
+      background-image: linear-gradient(145deg, #00FFF7, #6E00FF);
+      border: 0;
+    }
+
+    .curr {
+      border: 2px solid #00FFE1;
+      background: #1E006E;
+      color: #00FFE1;
+    }
+
+    .hide {
+      display: none;
+    }
+
+     .copy{
+      border: 1px solid gray;
+      width: 80px;
+      background-color: #1E006E;
+      color: white;
+      font-size: 16px;
+      position: absolute;
+      padding: 2px 5px 2px 5px;
+      left: 40%;
+      top: 17%;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+.copy:hover{
+  background: linear-gradient(145deg, #00FFF7, #6E00FF);
+      color: white;
+      border: none;
+}
+
+    textarea {
+      width: 95%;
+      height: 65vh;
+      padding: 10px;
+      resize: none;
+      border: 1px solid rgb(192, 188, 188);
+      background-color: hsl(224, 82%, 12%);
+      color: white;
+      font-size: 1rem;
+      font-family: monospace;
+      border-radius: 6px;
+      margin-bottom: 10px;
+    }
+
+    textarea::placeholder {
+      color: white;
+    }
+
+    .run {
+      color: white;
+      font-weight: bold;
+      width: 140px;
+      height: 35px;
+      background: #1E006E;
+      border-radius: 8px;
+      border: 1px solid #00FFE1;
+      cursor: pointer;
+      margin-right: 10px;
+    }
+
+    .run:hover {
+      background: linear-gradient(145deg, #00FFF7, #6E00FF);
+      color: #04153F;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Left Panel -->
+    <div class="left">
+      <div class="left-tabs">
+        <button class="left-tab-button active" onclick="showTab('description')">Description</button>
+        <button class="left-tab-button" onclick="showTab('editorial')">Editorial</button>
+      </div>
+
+       <div id="description" class="tab-content active">
+        <h2>Problem Statement</h2>
+        <p><strong>Title:</strong> Print "Tic Tac Toe"</p>
+        <p><strong>Description:</strong><br/>You are required to build a functional Tic Tac Toe game using HTML, CSS, and JavaScript where two players can alternately take turns to mark "X" and "O" on a 3x3 grid, and the game should detect a win, draw, or ongoing play in real-time, highlighting the winning combination when a player wins and preventing further moves after the game ends, all presented in a visually clear and responsive layout.</p>
+       <center> <video autoplay loop muted width="60%" height="500px">
+          <source src="./media/Tic Tac Toe.mp4" type="video/mp4">
+       </video>
+
+       </center>
+        <p><strong>Constraints:</strong></p>
+
+        <ul>
+
+          <li>The grid must be 3x3 with 9 clickable cells.</li>
+            <li>Players should alternate between "X" and "O" starting with "X".</li>
+            <li>The game must detect and declare a winner or a draw immediately after each move.
+
+          </li>
+
+        </ul>
+      </div>
+
+      <div id="output" class="tab-content">
+        <iframe id="user-output"></iframe>
+      </div>
+
+      <div id="editorial" class="tab-content">
+        <div class="sec">
+        <button class="html button curr" onclick="showHtml1()">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" alt="HTML Logo">HTML
+        </button>
+        <button class="css button" onclick="showCSS1()">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" alt="CSS Logo">CSS
+        </button>
+        <button class="js button" onclick="showJS1()">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" alt="JS Logo">JS
+        </button>
+      </div>
+      <button class="copy"><i class="fa-solid fa-copy"></i> copy</button>
+      <textarea id="html-code-1" placeholder="Write HTML here..." disabled>
+        <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel = "stylesheet" href="style.css">
+</head>
+<body>
+    <main>
+        <div class = "MessageBox ">
+            <div class="FirstPage ">
+                <div class="header"><h1>TIC TAC TOE</h1></div>
+                <div class = "IntroSection">
+                    <button class = "btn ">Player vs Player</button>
+                    <button class = "btn ">Player vs Computer</button>
+                </div>
+            </div>
+            <div class="SecondPage hide">
+                <div class="ResultSection">
+                    <div class="message"><h1>Winner</h1></div> 
+                    <div class="Result ">
+                        <div class="home">
+                            <button class = "newbtn ">Home</button>
+                            <button class = "newbtn ">Start Game</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="Game hide">
+            <h1><b>Tic Tac Toe</b></h1>
+            <div class="GameBox">
+                <div class="Board">
+                    <button class = "Box"></button>
+                    <button class = "Box"></button>
+                    <button class = "Box"></button>
+                    <button class = "Box"></button>
+                    <button class = "Box"></button>
+                    <button class = "Box"></button>
+                    <button class = "Box"></button>
+                    <button class = "Box"></button>
+                    <button class = "Box"></button>
+                </div>
+            </div>
+            <button id = "ResetButton">Reset</button>
+        </div>
+    </main>
+    <script src = "project1.js"></script>
+</body>
+</html>
+      </textarea>
+      <textarea id="css-code-1" class="hide" placeholder="Write CSS here..." disabled>
+        * {
+    margin: 0;
+    padding: 0;
+}
+body {
+    background-color: #112D4E;
+    text-align: center;
+    color: #F9F7F7;
+}
+.MessageBox {
+    height: 100vh;
+    width: 100%;
+    background-color: #ECEFCA;
+    color: #112D4E;
+}
+h1{
+    font-size: 12vh;
+}
+.GameBox {
+    height: 70vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.Board {
+    height: 60vh;
+    width: 60vh;
+    background-color: #112D4E;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+#ResetButton {
+    height: 40px;
+    width: 100px;
+    border-radius: 10px;
+    font-size: 18px;
+    color: #DBE2EF;
+    background-color: #3F72AF;
+    font-weight: bolder;
+    border: none;
+}
+.Box {
+    height: 18vh;
+    width: 18vh;
+    font-size: 8vmin;
+    background-color: #424242;
+    justify-self: center;
+    align-self: center;
+    border-radius: 20px;
+    border: none;
+    color: #0ABAB5;
+    font-weight:1000;
+    box-shadow: 0 0 10px black;
+}
+.Box:hover, #ResetButton:hover {
+    box-shadow: 0 0 5px #0ABAB5;
+}
+
+.hide {
+    display: none;
+}
+
+.newbtn:hover, .btn:hover {
+    box-shadow: 0 0 5px rgb(18, 21, 8);
+}
+.newbtn {
+    height: 40px;
+    width: 200px;
+    border-radius: 10px;
+    font-size: 18px;
+    color: #ffffff;
+    background-color: black;
+    font-weight: bolder;
+    border: none;
+}
+.IntroSection {
+    height: 80px;
+    font-size: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 350px;
+}
+.btn {
+    height: 40px;
+    width: 200px;
+    border-radius: 10px;
+    font-size: 18px;
+    color: #ffffff;
+    background-color: black;
+    font-weight: bolder;
+    border: none;
+}
+.header {
+    height:350px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.message {
+    height: 30vh;
+    width: 100%;
+    color: #112D4E;
+}
+.ResultSection{
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    font-size: 12vh;
+}
+.home {
+    display: flex;
+    gap: 300px;
+}
+@media (max-width : 450px) {
+    .header {
+        height:280px;
+        display: flex;
+        align-items: end;
+        justify-content: center;
+    }
+    h1 {
+        font-size: 6vh;
+    }
+    .IntroSection {
+        height: 80px;
+        font-size: 50px;
+        gap: 50px;
+    }
+    .btn {
+        height: 4.5vh;
+        width: 125px;
+        border-radius: 8px;
+        font-size: 12px;
+    }
+    .ResultSection{
+        height: 100vh;
+        display: block;
+        font-size: 8vh;
+    }
+    .message {
+        font-size: 46px;
+        height:280px;
+        display: flex;
+        align-items: end;
+        justify-content: center;
+    }
+    .newbtn {
+        height: 4.5vh;
+        width: 110px;
+        border-radius: 8px;
+        font-size: 12px;
+    }
+    .home {
+        height: 80px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 50px;
+    }
+    .Board {
+        height: 50vh;
+        width: 50vh;
+    }
+    .Box {
+        height: 15vh;
+        width: 15vh;
+        border-radius: 15px;
+    }
+    #ResetButton {
+        height: 6vh;
+        width: 16vh;
+        border-radius: 8px;
+        font-size: 15px;
+    }
+}
+      </textarea>
+      <textarea id="js-code-1" class="hide" placeholder="Write JS here..." disabled>
+        let boxes = document.querySelectorAll(".Box");
+let ResetBtn = document.querySelector("#ResetButton");
+let playerturn = true, gameturn = true;
+let messagebox = document.querySelector(".MessageBox");
+let btns = document.querySelectorAll(".btn");
+let firstpage = document.querySelector(".FirstPage");
+let secondpage = document.querySelector(".SecondPage");
+let game = document.querySelector(".Game");
+let message = document.querySelector(".message");
+let newbtn = document.querySelectorAll(".newbtn");
+let Result = document.querySelector(".Result");
+const reset = () => {
+    moves = 0;
+    PrvIndex = null;
+    j = null;
+    Ready = 0;
+    gameturn = !gameturn;
+    playerturn = false;
+}
+const winPatterns = [
+  [0, 1, 2],
+  [0, 3, 6],
+  [0, 4, 8],
+  [1, 4, 7],
+  [2, 5, 8],
+  [2, 4, 6],
+  [3, 4, 5],
+  [6, 7, 8],
+];
+const showWinner = (player) => {
+    game.classList.add("hide");
+    if(btnindex) {
+        if(player === "X") {
+            message.innerText = `Player wins!`;
+        }
+        else message.innerText = `Computer wins!`;
+    }
+    else {
+            message.innerText = (`Player   ${player} wins!`);
+    }
+    messagebox.classList.remove("hide");
+}
+const checkWinner = () => {
+  for (let pattern of winPatterns) {
+    let pos1Val = boxes[pattern[0]].innerText;
+    let pos2Val = boxes[pattern[1]].innerText;
+    let pos3Val = boxes[pattern[2]].innerText;
+
+    if (pos1Val != "" && pos2Val != "" && pos3Val != "") {
+      if (pos1Val === pos2Val && pos2Val === pos3Val) {
+        showWinner(pos1Val);
+        return true;
+      }
+    }
+  }
+};
+const AttakOrDefence = () => {
+    let DefenceIndex = null;
+    let count1 = 0, count2 = 0, k;
+    for(let i = 0; i < 9; i++) {
+        if(boxes[i].innerText === 'O') count1++;
+        else if(boxes[i].innerText === 'X') count2++;
+        else k = i;
+        if((i + 1) % 3 === 0) {
+            if(count1 === 2 && !count2) {
+				ComputerMove(k);
+				return 1;
+			}
+			else if(count2 === 2 && !count1) {
+                DefenceIndex = k;
+			}
+            count1 = 0, count2 = 0;
+        }
+    }
+    count1 = 0, count2 = 0;
+    for(let i = 0; i < 7; i += 3) {
+        if(boxes[i].innerText === 'O') count1++;
+        else if(boxes[i].innerText === 'X') count2++;
+        else k = i;
+    }
+    if(count1 === 2 && !count2) {
+        ComputerMove(k);
+        return 1;
+    }
+    else if(count2 === 2 && !count1) {
+        DefenceIndex = k;
+    }
+    count1 = 0, count2 = 0;
+    for(let i = 1; i < 9; i += 3) {
+        if(boxes[i].innerText === 'O') count1++;
+        else if(boxes[i].innerText === 'X') count2++;
+        else k = i;
+    }
+    if(count1 === 2 && !count2) {
+        ComputerMove(k);
+        return 1;
+    }
+    else if(count2 === 2 && !count1) {
+        DefenceIndex = k;
+    }
+    count1 = 0, count2 = 0;
+    for(let i = 2; i < 9; i += 3) {
+        if(boxes[i].innerText === 'O') count1++;
+        else if(boxes[i].innerText === 'X') count2++;
+        else k = i;
+    }
+    if(count1 === 2 && !count2) {
+        ComputerMove(k);
+        return 1;
+    }
+    else if(count2 === 2 && !count1) {
+        DefenceIndex = k;
+
+    }
+    count1 = 0, count2 = 0;
+    for(let i = 0; i < 9; i += 4) {
+        if(boxes[i].innerText === 'O') count1++;
+        else if(boxes[i].innerText === 'X') count2++;
+        else k = i;
+    }
+    if(count1 === 2 && !count2) {
+        ComputerMove(k);
+        return 1;
+    }
+    else if(count2 === 2 && !count1) {
+        DefenceIndex = k;
+    }
+    count1 = 0, count2 = 0;
+    for(let i = 2; i < 7; i += 2) {
+        if(boxes[i].innerText === 'O') count1++;
+        else if(boxes[i].innerText === 'X') count2++;
+        else k = i;
+    }
+    if(count1 === 2 && !count2) {
+        ComputerMove(k);
+        return 1;
+    }
+    else if(count2 === 2 && !count1) {
+        DefenceIndex = k;
+    }
+    if(DefenceIndex != null) {
+        ComputerMove(DefenceIndex);
+        return 1;
+    }
+    return 0;
+}
+let FightForDraw = () => {
+    while(moves < 9) {
+        let status = AttakOrDefence();
+        if(status === 1) return 1;
+        for (let i = 0; i < 9; i++) {
+            if (boxes[i].innerText === "") {
+                ComputerMove(i);
+                return 1;
+            }
+        }
+    }
+}
+const ComputerMove = (index) => {
+    boxes[index].innerText = "O";
+    boxes[index].diseabled = true;
+    moves++;
+}
+const Starter1 = (index, PrvIndex) => {
+    if(index === 4) {
+        ComputerMove(0);
+    }
+    else if(PrvIndex === 4 && index === 8) {
+        ComputerMove(2);
+    }
+    else if (PrvIndex === null && index != 4) {
+        ComputerMove(4);
+    }
+    else if(PrvIndex === 2 && index === 6 && moves === 3 || PrvIndex === 6 && index === 2 && moves === 3) {
+        ComputerMove(1);
+    }
+    else if(PrvIndex === 5 && index === 7 && moves === 3 || PrvIndex === 2 && index === 7 && moves === 3 || PrvIndex === 7 && index === 2 && moves === 3 || PrvIndex === 7 && index === 5 && moves === 3 || PrvIndex === 6 && index === 5 && moves === 3 || PrvIndex === 5 && index === 6 && moves === 3) {
+        ComputerMove(8);
+    }
+    else if(PrvIndex === 0 && index === 7 && moves === 3 || PrvIndex === 7 && index === 0 && moves === 3 || PrvIndex === 7 && index === 3 && moves === 3 || PrvIndex === 3 && index === 8  && moves === 3 || PrvIndex === 3 && index === 7 && moves === 3) {
+        ComputerMove(6);
+    }
+    else if(PrvIndex === 1 && index === 5 && moves === 3 || PrvIndex === 1 && index === 8 && moves === 3 || PrvIndex === 5 && index === 0  && moves === 3 || PrvIndex === 5 && index === 1 && moves === 3 || PrvIndex === 0 && index === 5  && moves === 3) {
+        ComputerMove(2);
+    }
+    else if(PrvIndex === 3 && index === 2 && moves === 3 || PrvIndex === 3 && index === 1 && moves === 3 || PrvIndex === 1 && index === 3 && moves === 3 || PrvIndex === 1 && index === 6 && moves === 3) {
+        ComputerMove(0);
+    }
+    else FightForDraw();
+}
+const Starter2 = (index, PrvIndex) => {
+    if(PrvIndex === null && index === 4) {
+        Ready = 2;
+    }
+    if(Ready === 2) {
+        FightForDraw();
+    }
+    else if(Ready === 1) {
+        AttakOrDefence();
+    }
+    else if(PrvIndex === null) {
+        if(index === 1){ 
+            ComputerMove(3);
+        }
+        else if(index === 3) {
+            ComputerMove(1);
+        }
+        else if(index === 2) {
+            ComputerMove(6);
+        }
+        else if(index === 6) {
+            ComputerMove(2);
+        }
+        else ComputerMove(6);
+    }
+    else if(PrvIndex === 1 && moves === 4 || PrvIndex === 3 && moves === 4) {
+        if(!AttakOrDefence()) ComputerMove(4);
+        Ready = 1;
+    }
+    else if(PrvIndex === 2 && moves === 4 || PrvIndex === 6 && moves === 4) {
+        if(!AttakOrDefence()) ComputerMove(8);
+        Ready = 1;
+    }
+    else {
+        if(!AttakOrDefence()) ComputerMove(2);
+        Ready = 1;
+    }
+}
+const Enable = () => {
+    for (let i = 0; i < 9; i++) {
+        boxes[i].diseabled = false;
+        boxes[i].innerText = "";
+    }
+}
+let j = null;
+let moves = 0;
+let btnindex;
+let Ready = 0;
+let isWinner;
+const InputTaker = () => {
+    boxes.forEach((box, i) => {
+        box.addEventListener("click", () => {
+            if(!box.diseabled) {
+                if(!playerturn) {
+                    box.innerText = "X";
+                    playerturn = !playerturn;
+                    moves++;
+                }
+                else if(btnindex === 0) {
+                    box.innerText = "O";
+                    playerturn = !playerturn;
+                    moves++;
+                }
+                box.diseabled = true;
+                isWinner = checkWinner();
+                if(btnindex === 1 && !isWinner) {
+                    if(!gameturn) Starter1(i, j);
+                    else Starter2(i, j);
+                    playerturn = !playerturn;
+                }
+                isWinner = checkWinner();
+                j = i;
+                if (moves === 9 && !isWinner) {
+                    game.classList.add("hide");
+                    message.innerText = `It's a Draw`;
+                    messagebox.classList.remove("hide");
+                }
+            }
+        });
+    });
+    ResetBtn.addEventListener("click",() => {
+        Enable();
+        moves = 0;
+        if(btnindex === 1 && gameturn) {
+            ComputerMove(0);
+        }
+        PrvIndex = null;
+        j = null;
+        Ready = 0;
+        playerturn = false;
+    });
+}
+btns.forEach((btn, i) => {
+    btn.addEventListener("click", () => {
+        btnindex = i;
+        firstpage.classList.add("hide");
+        if(!i) {
+            message.innerText = "Player1 Starts";
+        }
+        else {
+            message.innerText = "Player Starts";
+        }
+        secondpage.classList.remove("hide");
+    });
+});
+newbtn.forEach((nbtn, k) => {
+    nbtn.addEventListener("click", () => {
+        reset();
+        Enable();
+        if(k === 1) {
+            game.classList.remove("hide");
+            messagebox.classList.add("hide");
+            nbtn.innerText = "New Game";
+            if(btnindex === 1 && gameturn) {
+                ComputerMove(0);
+            }
+            InputTaker();
+        }
+        else {
+            secondpage.classList.add("hide");
+            firstpage.classList.remove("hide");
+            newbtn[1].innerText = "Start Game";
+        }
+    });
+});
+
+
+
+      </textarea>
+        
+      </div>
+    </div>
+
+    <!-- Right Panel -->
+    <div class="right">
+      <h3>🛠 Code Editor</h3>
+      <div class="sec">
+        <button class="html button curr" onclick="showHtml()">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" alt="HTML Logo">HTML
+        </button>
+        <button class="css button" onclick="showCSS()">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" alt="CSS Logo">CSS
+        </button>
+        <button class="js button" onclick="showJS()">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" alt="JS Logo">JS
+        </button>
+      </div>
+
+      <textarea id="html-code" placeholder="Write HTML here..."></textarea>
+      <textarea id="css-code" class="hide" placeholder="Write CSS here..."></textarea>
+      <textarea id="js-code" class="hide" placeholder="Write JS here..."></textarea>
+
+      <div>
+        <button onclick="runInNewPage()" class="run">Run in New Page</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let externalWindow = null;
+
+    function showHtml() {
+      document.getElementById("html-code").classList.remove("hide");
+      document.getElementById("css-code").classList.add("hide");
+      document.getElementById("js-code").classList.add("hide");
+
+      const buttons = document.getElementsByClassName("button");
+      buttons[3].classList.add("curr");
+      buttons[4].classList.remove("curr");
+      buttons[5].classList.remove("curr");
+    }
+
+    function showCSS() {
+      document.getElementById("css-code").classList.remove("hide");
+      document.getElementById("html-code").classList.add("hide");
+      document.getElementById("js-code").classList.add("hide");
+
+      const buttons = document.getElementsByClassName("button");
+      buttons[4].classList.add("curr");
+      buttons[3].classList.remove("curr");
+      buttons[5].classList.remove("curr");
+    }
+
+    function showJS() {
+      document.getElementById("js-code").classList.remove("hide");
+      document.getElementById("css-code").classList.add("hide");
+      document.getElementById("html-code").classList.add("hide");
+
+      const buttons = document.getElementsByClassName("button");
+      buttons[5].classList.add("curr");
+      buttons[3].classList.remove("curr");
+      buttons[4].classList.remove("curr");
+    }
+
+
+    function showHtml1() {
+      document.getElementById("html-code-1").classList.remove("hide");
+      document.getElementById("css-code-1").classList.add("hide");
+      document.getElementById("js-code-1").classList.add("hide");
+
+      const buttons = document.getElementsByClassName("button");
+      buttons[0].classList.add("curr");
+      buttons[1].classList.remove("curr");
+      buttons[2].classList.remove("curr");
+    }
+
+    function showCSS1() {
+      document.getElementById("css-code-1").classList.remove("hide");
+      document.getElementById("html-code-1").classList.add("hide");
+      document.getElementById("js-code-1").classList.add("hide");
+
+      const buttons = document.getElementsByClassName("button");
+      buttons[1].classList.add("curr");
+      buttons[0].classList.remove("curr");
+      buttons[2].classList.remove("curr");
+    }
+
+    function showJS1() {
+      document.getElementById("js-code-1").classList.remove("hide");
+      document.getElementById("css-code-1").classList.add("hide");
+      document.getElementById("html-code-1").classList.add("hide");
+
+      const buttons = document.getElementsByClassName("button");
+      buttons[2].classList.add("curr");
+      buttons[0].classList.remove("curr");
+      buttons[1].classList.remove("curr");
+    }
+
+    function buildUserCode() {
+      const html = document.getElementById("html-code").value;
+      const css = document.getElementById("css-code").value;
+      const js = document.getElementById("js-code").value;
+
+      return `
+        <!DOCTYPE html>
+        <html>
+        <head>
+          <style>${css}</style>
+        </head>
+        <body>
+          ${html}
+          <script>${js.replace(/<\/script>/g, "<\\/script>")}<\/script>
+        </body>
+        </html>
+      `;
+    }
+
+   
+
+    function runInNewPage() {
+      const userCode = buildUserCode();
+      externalWindow = window.open();
+      if (externalWindow) {
+        externalWindow.document.open();
+        externalWindow.document.write(userCode);
+        externalWindow.document.close();
+      } else {
+        alert("Popup blocked! Please allow popups for this site.");
+      }
+    }
+
+    function showTab(tabId) {
+      const contents = document.querySelectorAll('.tab-content');
+      const buttons = document.querySelectorAll('.left-tab-button');
+      contents.forEach(c => c.classList.remove('active'));
+      buttons.forEach(b => b.classList.remove('active'));
+      document.getElementById(tabId).classList.add('active');
+      event.target.classList.add('active');
+    }
+  </script>
+</body>
+</html>

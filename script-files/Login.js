@@ -88,21 +88,18 @@ sign_up_btn.addEventListener("click", () => {
 
 line5.addEventListener("click", () => {
     if (localStorage.getItem(line2.value) === null) {
-        // Redirect to Home page or perform login action
         alert("Please register first.");
     } 
     else if (
         JSON.parse(localStorage.getItem(line2.value))["password"] ===
         line3.value
     ) {
-        // Redirect to Home page or perform login action
         localStorage.setItem(
             "loggedInUserName",
             JSON.parse(localStorage.getItem(line2.value))["name"]
         );
         window.parent.location.reload();
     } else {
-        // Show error message
         alert("Invalid email or password. Please try again.");
     }
 });
