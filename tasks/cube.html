@@ -1,388 +1,473 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>My Cube - Interactive Playground</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #04153F;
-      color: white;
-    }
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Cube</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #04153F;
+            color: white;
+        }
 
-    .container {
-      display: flex;
-      flex-direction: row;
-      min-height: 100vh;
-      box-sizing: border-box;
-    }
+        .container {
+            display: flex;
+            min-height: 100vh;
+            box-sizing: border-box;
+        }
 
-    .left,
-    .right {
-      width: 50%;
-      padding: 20px;
-      box-sizing: border-box;
-      display: flex;
-      flex-direction: column;
-    }
+        .left,
+        .right {
+            width: 50%;
+            padding: 20px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+        }
 
-    .left-tabs {
-      display: flex;
-      gap: 10px;
-      margin-bottom: 10px;
-      flex-wrap: wrap;
-    }
+        .left-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+        }
 
-    .left-tab-button {
-      color: white;
-      font-weight: bold;
-      padding: 8px 16px;
-      font-size: 14px;
-      background-color: #1E006E;
-      border: 1px solid #00FFE1;
-      border-radius: 5px;
-      cursor: pointer;
-    }
+        .left-tab-button {
+            color: white;
+            font-weight: bold;
+            padding: 8px 16px;
+            font-size: 14px;
+            background-color: #1E006E;
+            border: 1px solid #00FFE1;
+            border-radius: 5px;
+            cursor: pointer;
+        }
 
-    .left-tab-button.active {
-      background-color: #00FFE1;
-      color: #04153F;
-    }
+        .left-tab-button.active {
+            background-image: linear-gradient(145deg, #00FFF7, #6E00FF);
+            color: #04153F;
+        }
 
-    .tab-content {
-      background: #121E3A;
-      padding: 15px;
-      border-radius: 10px;
-      display: none;
-      color: #D1D5DB;
-      line-height: 1.6;
-      height: calc(100vh - 100px);
-      overflow-y: auto;
-    }
+        .tab-content {
+            background: #121E3A;
+            padding: 15px;
+            border-radius: 10px;
+            display: none;
+            color: #D1D5DB;
+            line-height: 1.6;
+            height: calc(100vh - 100px);
+            overflow-y: auto;
+        }
 
-    .tab-content.active {
-      display: block;
-    }
+        .tab-content.active {
+            display: block;
+        }
 
-    #output {
-      padding: 0;
-      background: none;
-    }
+        #output {
+            padding: 0;
+            background: none;
+        }
 
-    #output iframe {
-      width: 100%;
-      height: 100%;
-      border: none;
-      background: white;
-      border-radius: 6px;
-    }
+        #output iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            background: white;
+            border-radius: 6px;
+        }
 
-    .right h2 {
-      color: white;
-      margin-top: 0;
-    }
+        .right h2 {
+            color: white;
+            margin-top: 0;
+        }
 
-    .sec {
-      height: 25px;
-      margin-bottom: 10px;
-      display: flex;
-      gap: 5px;
-      flex-wrap: wrap;
-    }
+        .sec {
+            margin-bottom: 10px;
+            display: flex;
+            gap: 5px;
+            flex-wrap: wrap;
+        }
 
-    .button {
-      color: white;
-      font-weight: bold;
-      width: 110px;
-      height: 31px;
-      border: 1px solid gray;
-      background: #1E006E;
-      cursor: pointer;
-      border-radius: 5px;
-      transition: 0.3s;
-      font-size: 16px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 5px;
-    }
+        .button {
+            color: white;
+            font-weight: bold;
+            width: 110px;
+            height: 31px;
+            border: 1px solid gray;
+            background: #1E006E;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: 0.3s;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
 
-    .button:hover {
-      background-color: #00FFE1;
-      border: 0;
-      color: #04153F;
-    }
+        .button:hover {
+            background-image: linear-gradient(145deg, #00FFF7, #6E00FF);
+            border: 0;
+        }
 
-    .curr {
-      font-size: 16px;
-      border: 2px solid #00FFE1;
-      background: #1E006E;
-      color: white;
-    }
+        .curr {
+            font-size: 16px;
+            border: 2px solid #00FFE1;
+            background: #1E006E;
+            color: white;
+        }
 
-    .hide {
-      display: none;
-    }
+        .hide {
+            display: none;
+        }
 
-    .lang-icon {
-      width: 20px;
-      height: 20px;
-      font-size: 20px;
-    }
+        .lang-icon {
+            width: 20px;
+            height: 20px;
+            font-size: 20px;
+        }
 
-    textarea {
-      width: 100%;
-      height: 65vh;
-      padding: 10px;
-      resize: none;
-      border: 1px solid rgb(192, 188, 188);
-      background-color: hsl(224, 82%, 12%);
-      color: white;
-      font-size: 1rem;
-      font-family: monospace;
-      border-radius: 6px;
-      margin-bottom: 10px;
-      box-sizing: border-box;
-      overflow-y: auto;
-    }
+        textarea {
+           width: 95%;
+            height: 65vh;
+            padding: 10px;
+            resize: none;
+            border: 1px solid rgb(192, 188, 188);
+            background-color: hsl(224, 82%, 12%);
+            color: white;
+            font-size: 1rem;
+            font-family: monospace;
+            border-radius: 6px;
+            margin-bottom: 10px;
+        }
 
-    textarea::placeholder {
-      color: white;
-    }
+        textarea::placeholder {
+            color: white;
+        }
 
-    .run {
-      color: white;
-      font-weight: bold;
-      width: 100px;
-      height: 35px;
-      background: #1E006E;
-      font-size: 16px;
-      border-radius: 8px;
-      border: 1px solid #00FFE1;
-      cursor: pointer;
-      margin-right: 10px;
-    }
+        .run {
+            color: white;
+            font-weight: bold;
+            width: 140px;
+            height: 35px;
+            background: #1E006E;
+            border-radius: 8px;
+            border: 1px solid #00FFE1;
+            cursor: pointer;
+            margin-right: 10px;
+        }
 
-    .run-new {
-      color: white;
-      font-weight: bold;
-      width: 180px;
-      height: 35px;
-      background: #1E006E;
-      font-size: 16px;
-      border-radius: 8px;
-      border: 1px solid #00FFE1;
-      cursor: pointer;
-      margin-right: 10px;
-    }
+        .run-new {
+             color: white;
+            font-weight: bold;
+            width: 180px;
+            height: 35px;
+            background: #1E006E;
+            font-size: 14px;
+            border-radius: 8px;
+            border: 1px solid #00FFE1;
+            cursor: pointer;
+        }
 
-    .run:hover,
-    .run-new:hover {
-      background-color: #00FFE1;
-      color: #04153F;
-    }
+        .run:hover,
+        .run-new:hover {
+            background-color: #00FFE1;
+            color: #04153F;
+        }
+        
+        .rp {
+             display: flex;
+            align-items: center;
+        }
 
-    @media (max-width: 768px) {
-      .container {
-        flex-direction: column;
-      }
+        .mark-container {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-left: auto;
+        }
 
-      .left,
-      .right {
-        width: 100%;
-        padding: 10px;
-      }
+        .mark-container label {
+            color: #00FF7F;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+        }
+        
+        .mark-container input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+            accent-color: #00FF7F;
+        }
+        #mark-as-completed {
+            background-color: #04153F;
+            border: 1px solid #00FF7F;
+            border-radius: 10px;
+            padding: 10px 20px;
+            color: #00FF7F;
+            font-weight: 600;
+            cursor: pointer;
+        }
 
-      .left-tabs {
-        justify-content: center;
-      }
+        #mark-as-completed:hover {
+            background-color: #00FF7F;
+            color: #1E006E;
+        }
+        .cp {
+            width: 100%;
+            display: flex;
+            flex-direction: row-reverse;
+        }
+        .copy {
+            border: 1px solid gray;
+            width: 80px;
+            background-color: #1E006E;
+            color: white;
+            font-size: 16px;
+            padding: 5px;
+            border-radius: 5px;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .copy:hover {
+            background: linear-gradient(145deg, #00FFF7, #6E00FF);
+            color: white;
+            border: none;
+        }
 
-      .left-tab-button {
-        font-size: 12px;
-        padding: 6px 12px;
-      }
+        #heart{
+            width: fit-content;
+            height: 30px;
+            background-color: #121E3A;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            padding: 5px 10px;
+            font-weight: bold;
+            transition: color 0.3s ease;
+            font-size: 20px;
+        }
+        #heart:hover {
+            color: red;
+        }
 
-      .tab-content {
-        height: auto;
-        min-height: 300px;
-        flex-grow: 1;
-      }
+        .heading {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
 
-      textarea {
-        height: 50vh;
-        font-size: 0.9rem;
-      }
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
 
-      .button {
-        width: 100px;
-        font-size: 14px;
-      }
+            .left,
+            .right {
+                width: 100%;
+                padding: 10px;
+            }
 
-      .run, .run-new {
-        margin: 5px 0;
-      }
+            .left-tabs {
+                justify-content: center;
+            }
 
-      video {
-        width: 100%;
-        max-width: 540px;
-        height: auto;
-      }
-    }
+            .left-tab-button {
+                font-size: 12px;
+                padding: 6px 12px;
+            }
 
-    @media (max-width: 480px) {
-      .left-tab-button {
-        font-size: 10px;
-        padding: 5px 10px;
-      }
+            .tab-content {
+                height: auto;
+                min-height: 300px;
+                flex-grow: 1;
+            }
 
-      .tab-content {
-        padding: 10px;
-      }
+            textarea {
+                height: 50vh;
+                font-size: 0.9rem;
+            }
 
-      textarea {
-        height: 40vh;
-        font-size: 0.8rem;
-      }
+            .button {
+                width: 100px;
+                font-size: 14px;
+            }
 
-      .button {
-        width: 90px;
-        font-size: 12px;
-      }
+            .run, .run-new {
+                margin: 5px 0;
+            }
 
-      .run, .run-new {
-        font-size: 16px;
-      }
+            video {
+                width: 100%;
+                max-width: 540px;
+                height: auto;
+            }
+            .mark-container {
+                margin-left: 0;
+                width: 100%;
+                justify-content: flex-end;
+            }
+            .mark-container {
+                margin-left: 0;
+                width: 100%;
+                justify-content: flex-end;
+            }
+        }
 
-      video {
-        width: 100%;
-        max-width: 100%;
-        height: auto;
-      }
-    }
-  </style>
+        @media (max-width: 480px) {
+            .left-tab-button {
+                font-size: 10px;
+                padding: 5px 10px;
+            }
+
+            .tab-content {
+                padding: 10px;
+            }
+
+            textarea {
+                height: 40vh;
+                font-size: 0.8rem;
+            }
+
+            .button {
+                width: 90px;
+                font-size: 12px;
+            }
+
+            .run, .run-new {
+                font-size: 16px;
+            }
+
+            video {
+                width: 100%;
+                max-width: 100%;
+                height: auto;
+            }
+        }
+    </style>
 </head>
 <body>
-  <div class="container">
-    <!-- Left Panel -->
-    <div class="left">
-      <div class="left-tabs">
-        <button class="left-tab-button active" onclick="showTab('description', event)">Description</button>
-        <button class="left-tab-button" onclick="showTab('output', event)">Preview</button>
-        <button class="left-tab-button" onclick="showTab('editorial', event)">Editorial</button>
-      </div>
-
-      <div id="description" class="tab-content active">
-        <h2>Welcome to My Cube</h2>
-        <p><strong>Title:</strong> My Cube: Interactive Code Playground</p>
-        <p><strong>Overview:</strong><br/>
-          <ul>
-            <li>Explore your creativity in a dual-panel code environment built for learning and fun.</li>
-            <li>Switch between tabs: <strong>Description</strong>, <strong>Output</strong>, and <strong>Editorial</strong>.</li>
-            <li>Code using HTML, CSS, and JS with live output in the right panel.</li>
-            <li>Run your work inside the app or in a new browser tab.</li>
-          </ul>
-        </p>
-        <p><strong>Live Visual:</strong></p>
-        <video src="./media/cube.mp4" autoplay muted loop playsinline style="width: 100%; max-width: 540px; height: auto; border-radius: 10px;"></video>
-
-        <p><strong>What You Can Do:</strong></p>
-        <ul>
-          <li>Use &lt;textarea&gt; to write HTML, CSS, and JavaScript.</li>
-          <li>Click "Run" to preview or launch your creation.</li>
-          <li>Switch code languages instantly with visual language toggles.</li>
-          <li>Enjoy sleek styling and intuitive design built for focus and performance.</li>
-        </ul>
-      </div>
-
-      <div id="output" class="tab-content">
-        <iframe id="user-output"></iframe>
-      </div>
-
-      <div id="editorial" class="tab-content">
-        <div class="sec">
-          <button class="html button curr" onclick="showHtml1()">
-            HTML <img src="./media/html.png" alt="HTML" class="lang-icon">
-          </button>
-          <button class="css button" onclick="showCSS1()">
-            CSS <img src="./media/css.png" alt="CSS" class="lang-icon">
-          </button>
-          <button class="js button" onclick="showJS1()">
-            JS <img src="./media/javascript.png" alt="JS" class="lang-icon">
-          </button>
-        </div>
-        <textarea id="html-code-1" placeholder="Write HTML here..." disabled>
-    <div class="cube">
+    <div class="container">
         <div class="left">
-            <div class="ch1"></div>
-            <div class="ch1"></div>
-            <div class="ch1"></div>
-            <div class="ch1"></div>
-            <div class="ch1"></div>
-            <div class="ch1"></div>
-            <div class="ch1"></div>
-            <div class="ch1"></div>
-            <div class="ch1"></div>
-        </div>
-        <div class="right">
-            <div class="ch1"></div>
-            <div class="ch1"></div>
-            <div class="ch1"></div>
-            <div class="ch1"></div>
-            <div class="ch1"></div>
-            <div class="ch1"></div>
-            <div class="ch1"></div>
-            <div class="ch1"></div>
-            <div class="ch1"></div>
-        </div>
-        <div class="top">
-            <div class="ch1"></div>
-            <div class="ch1"></div>
-            <div class="ch1"></div>
-            <div class="ch1"></div>
-            <div class="ch1"></div>
-            <div class="ch1"></div>
-            <div class="ch1"></div>
-            <div class="ch1"></div>
-            <div class="ch1"></div>
-        </div>
-        <div class="bottom">
-            <div class="ch1"></div>
-            <div class="ch1"></div>
-            <div class="ch1"></div>
-            <div class="ch1"></div>
-            <div class="ch1"></div>
-            <div class="ch1"></div>
-            <div class="ch1"></div>
-            <div class="ch1"></div>
-            <div class="ch1"></div>
-        </div>
-        <div class="front">
-            <div class="ch1"></div>
-            <div class="ch1"></div>
-            <div class="ch1"></div>
-            <div class="ch1"></div>
-            <div class="ch1"></div>
-            <div class="ch1"></div>
-            <div class="ch1"></div>
-            <div class="ch1"></div>
-            <div class="ch1"></div>
-        </div>
-        <div class="back">
-            <div class="ch1"></div>
-            <div class="ch1"></div>
-            <div class="ch1"></div>
-            <div class="ch1"></div>
-            <div class="ch1"></div>
-            <div class="ch1"></div>
-            <div class="ch1"></div>
-            <div class="ch1"></div>
-            <div class="ch1"></div>
-        </div>
+            <div class="left-tabs">
+                <button class="left-tab-button active" onclick="showTab('description', event)">Description</button>
+                <button class="left-tab-button" onclick="showTab('editorial', event)">Editorial</button>
+            </div>
+
+            <div id="description" class="tab-content active">
+                <div class="heading"><h2>Cube</h2>
+                <i id="heart" class="fas fa-heart white-heart"></i></div>
+                <p><strong>Overview:</strong><br/>
+                    <ul>
+                        <li>Explore your creativity in a dual-panel code environment built for learning and fun.</li>
+                        <li>Switch between tabs: <strong>Description</strong>, <strong>Output</strong>, and <strong>Editorial</strong>.</li>
+                        <li>Code using HTML, CSS, and JS with live output in the right panel.</li>
+                        <li>Run your work inside the app or in a new browser tab.</li>
+                    </ul>
+                </p>
+                <p><strong>Live Visual:</strong></p>
+                <video src="./media/cube.mp4" autoplay muted loop playsinline style="width: 100%; max-width: 540px; height: auto; border-radius: 10px;"></video>
+
+                <p><strong>What You Can Do:</strong></p>
+                <ul>
+                    <li>Use &lt;textarea&gt; to write HTML, CSS, and JavaScript.</li>
+                    <li>Click "Run" to preview or launch your creation.</li>
+                    <li>Switch code languages instantly with visual language toggles.</li>
+                    <li>Enjoy sleek styling and intuitive design built for focus and performance.</li>
+                </ul>
+            </div>
+            <div id="editorial" class="tab-content">
+                <div class="sec">
+                    <button class="html button curr" onclick="showHtml1()">
+                        HTML <img src="./media/html.png" alt="HTML" class="lang-icon">
+                    </button>
+                    <button class="css button" onclick="showCSS1()">
+                        CSS <img src="./media/css.png" alt="CSS" class="lang-icon">
+                    </button>
+                    <button class="js button" onclick="showJS1()">
+                        JS <img src="./media/javascript.png" alt="JS" class="lang-icon">
+                    </button>
+                    <div class="cp"><button class="copy" onclick="copyCode(this)"><i class="fa-solid fa-copy"></i> Copy</button></div>
+                </div>
+                <textarea id="html-code-1" placeholder="Write HTML here..." disabled>
+<div class="cube">
+    <div class="left">
+        <div class="ch1"></div>
+        <div class="ch1"></div>
+        <div class="ch1"></div>
+        <div class="ch1"></div>
+        <div class="ch1"></div>
+        <div class="ch1"></div>
+        <div class="ch1"></div>
+        <div class="ch1"></div>
+        <div class="ch1"></div>
     </div>
-        </textarea>
-        <textarea id="css-code-1" class="hide" placeholder="Write CSS here..." disabled>
+    <div class="right">
+        <div class="ch1"></div>
+        <div class="ch1"></div>
+        <div class="ch1"></div>
+        <div class="ch1"></div>
+        <div class="ch1"></div>
+        <div class="ch1"></div>
+        <div class="ch1"></div>
+        <div class="ch1"></div>
+        <div class="ch1"></div>
+    </div>
+    <div class="top">
+        <div class="ch1"></div>
+        <div class="ch1"></div>
+        <div class="ch1"></div>
+        <div class="ch1"></div>
+        <div class="ch1"></div>
+        <div class="ch1"></div>
+        <div class="ch1"></div>
+        <div class="ch1"></div>
+        <div class="ch1"></div>
+    </div>
+    <div class="bottom">
+        <div class="ch1"></div>
+        <div class="ch1"></div>
+        <div class="ch1"></div>
+        <div class="ch1"></div>
+        <div class="ch1"></div>
+        <div class="ch1"></div>
+        <div class="ch1"></div>
+        <div class="ch1"></div>
+        <div class="ch1"></div>
+    </div>
+    <div class="front">
+        <div class="ch1"></div>
+        <div class="ch1"></div>
+        <div class="ch1"></div>
+        <div class="ch1"></div>
+        <div class="ch1"></div>
+        <div class="ch1"></div>
+        <div class="ch1"></div>
+        <div class="ch1"></div>
+        <div class="ch1"></div>
+    </div>
+    <div class="back">
+        <div class="ch1"></div>
+        <div class="ch1"></div>
+        <div class="ch1"></div>
+        <div class="ch1"></div>
+        <div class="ch1"></div>
+        <div class="ch1"></div>
+        <div class="ch1"></div>
+        <div class="ch1"></div>
+        <div class="ch1"></div>
+    </div>
+</div>
+                </textarea>
+                <textarea id="css-code-1" class="hide" placeholder="Write CSS here..." disabled>
 body {
     display: flex;
     justify-content: center;
@@ -457,158 +542,230 @@ body {
         transform: rotateX(360deg) rotateY(360deg);
     }
 }
-        </textarea>
-        <textarea id="js-code-1" class="hide" placeholder="Write JS here..." disabled></textarea>
-      </div>
+                </textarea>
+                <textarea id="js-code-1" class="hide"  disabled></textarea>
+            </div>
+        </div>
+
+        <div class="right">
+            <h2>Code Editor</h2>
+            <div class="sec">
+                <button class="html button curr" onclick="showHtml()">
+                    HTML <img src="./media/html.png" alt="HTML" class="lang-icon">
+                </button>
+                <button class="css button" onclick="showCSS()">
+                    CSS <img src="./media/css.png" alt="CSS" class="lang-icon">
+                </button>
+                <button class="js button" onclick="showJS()">
+                    JS <img src="./media/javascript.png" alt="JS" class="lang-icon">
+                </button>
+            </div>
+
+            <textarea id="html-code" placeholder="Write HTML here..."></textarea>
+            <textarea id="css-code" class="hide" placeholder="Write CSS here..."></textarea>
+            <textarea id="js-code" class="hide" placeholder="Write JS here..."></textarea>
+
+            <div class="rp">
+                <button onclick="runCode()" class="run">Run</button>
+                <div class="mark-container">
+                    <button id="mark-as-completed">Mark as Completed</button>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <!-- Right Panel -->
-    <div class="right">
-      <h2>🛠 Code Editor</h2>
-      <div class="sec">
-        <button class="html button curr" onclick="showHtml()">
-          HTML <img src="./media/html.png" alt="HTML" class="lang-icon">
-        </button>
-        <button class="css button" onclick="showCSS()">
-          CSS <img src="./media/css.png" alt="CSS" class="lang-icon">
-        </button>
-        <button class="js button" onclick="showJS()">
-          JS <img src="./media/javascript.png" alt="JS" class="lang-icon">
-        </button>
-      </div>
+    <script>
+        let classes = new Array(9);
+        let fav_btn = document.querySelector("#heart");
+        classes[0] = "fav-task1";
+        classes[1] = "fav-task2";
+        classes[2] = "fav-task3";
+        classes[3] = "fav-task4";
+        classes[4] = "fav-task5";
+        classes[5] = "fav-task6";
+        classes[6] = "fav-task7";
+        classes[7] = "fav-task8";
+        classes[8] = "fav-task9";
+        fav_btn.addEventListener('click', () => {
+            if(localStorage.getItem(classes[localStorage.getItem("task_page")]) >= 0) {
+                localStorage.setItem(classes[localStorage.getItem("task_page")], -1);
+                document.getElementById("heart").style.color = "white";
+            }
+            else {
+                localStorage.setItem(classes[localStorage.getItem("task_page")], localStorage.getItem("task_page"));
+                document.getElementById("heart").style.color = "red";
+            }
+        });
+        if(localStorage.getItem(classes[localStorage.getItem("task_page")]) >= 0) {
+            document.getElementById("heart").style.color = "red";
+        }
+        else {
+            document.getElementById("heart").style.color = "white";
+        }
+        let externalWindow = null;
+         function copyCode(buttonElement) {
+            const activeCodeButton = document.querySelector("#editorial .button.curr");
+            const codeType = activeCodeButton.classList[0]; 
 
-      <textarea id="html-code" placeholder="Write HTML here..."></textarea>
-      <textarea id="css-code" class="hide" placeholder="Write CSS here..."></textarea>
-      <textarea id="js-code" class="hide" placeholder="Write JS here..."></textarea>
+            const textAreaId = `${codeType}-code-1`;
+            const textArea = document.getElementById(textAreaId);
 
-      <div>
-        <button onclick="runCode()" class="run">Run ▶</button>
-        <button onclick="runInNewPage()" class="run-new">Run in New Page ▶</button>
-      </div>
-    </div>
-  </div>
+            navigator.clipboard.writeText(textArea.value).then(() => {
+                buttonElement.innerHTML = '<i class="fa-solid fa-check"></i> Copied!';
+                setTimeout(() => {
+                    buttonElement.innerHTML = '<i class="fa-solid fa-copy"></i> Copy';
+                }, 2000); 
+            }).catch(err => {
+                console.error('Failed to copy text: ', err);
+            });
+        }
+        function showHtml() {
+            document.getElementById("html-code").classList.remove("hide");
+            document.getElementById("css-code").classList.add("hide");
+            document.getElementById("js-code").classList.add("hide");
 
-  <script>
-    let externalWindow = null;
+            const buttons = document.getElementsByClassName("button");
+            buttons[3].classList.add("curr");
+            buttons[4].classList.remove("curr");
+            buttons[5].classList.remove("curr");
+        }
 
-    function showHtml() {
-      document.getElementById("html-code").classList.remove("hide");
-      document.getElementById("css-code").classList.add("hide");
-      document.getElementById("js-code").classList.add("hide");
+        function showCSS() {
+            document.getElementById("css-code").classList.remove("hide");
+            document.getElementById("html-code").classList.add("hide");
+            document.getElementById("js-code").classList.add("hide");
 
-      const buttons = document.getElementsByClassName("button");
-      buttons[3].classList.add("curr");
-      buttons[4].classList.remove("curr");
-      buttons[5].classList.remove("curr");
+            const buttons = document.getElementsByClassName("button");
+            buttons[4].classList.add("curr");
+            buttons[3].classList.remove("curr");
+            buttons[5].classList.remove("curr");
+        }
+
+        function showJS() {
+            document.getElementById("js-code").classList.remove("hide");
+            document.getElementById("css-code").classList.add("hide");
+            document.getElementById("html-code").classList.add("hide");
+
+            const buttons = document.getElementsByClassName("button");
+            buttons[5].classList.add("curr");
+            buttons[3].classList.remove("curr");
+            buttons[4].classList.remove("curr");
+        }
+
+        function showHtml1() {
+            document.getElementById("html-code-1").classList.remove("hide");
+            document.getElementById("css-code-1").classList.add("hide");
+            document.getElementById("js-code-1").classList.add("hide");
+
+            const buttons = document.getElementsByClassName("button");
+            buttons[0].classList.add("curr");
+            buttons[1].classList.remove("curr");
+            buttons[2].classList.remove("curr");
+        }
+
+        function showCSS1() {
+            document.getElementById("css-code-1").classList.remove("hide");
+            document.getElementById("html-code-1").classList.add("hide");
+            document.getElementById("js-code-1").classList.add("hide");
+
+            const buttons = document.getElementsByClassName("button");
+            buttons[1].classList.add("curr");
+            buttons[0].classList.remove("curr");
+            buttons[2].classList.remove("curr");
+        }
+
+        function showJS1() {
+            document.getElementById("js-code-1").classList.remove("hide");
+            document.getElementById("css-code-1").classList.add("hide");
+            document.getElementById("html-code-1").classList.add("hide");
+
+            const buttons = document.getElementsByClassName("button");
+            buttons[2].classList.add("curr");
+            buttons[0].classList.remove("curr");
+            buttons[1].classList.remove("curr");
+        }
+
+        function buildUserCode() {
+            const html = document.getElementById("html-code").value;
+            const css = document.getElementById("css-code").value;
+            const js = document.getElementById("js-code").value;
+
+            return `
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <style>${css}</style>
+                </head>
+                <body>
+                    ${html}
+                    <script>${js.replace(/<\/script>/g, "<\\/script>")}<\/script>
+                </body>
+                </html>
+            `;
+        }
+
+        function runCode() {
+          runInNewPage();
+        }
+
+        function runInNewPage() {
+            const userCode = buildUserCode();
+            externalWindow = window.open();
+            if (externalWindow) {
+                externalWindow.document.open();
+                externalWindow.document.write(userCode);
+                externalWindow.document.close();
+            } else {
+                alert("Popup blocked! Please allow popups for this site.");
+            }
+        }
+
+        function showTab(tabId, event) {
+            const contents = document.querySelectorAll('.tab-content');
+            const buttons = document.querySelectorAll('.left-tab-button');
+            contents.forEach(c => c.classList.remove('active'));
+            buttons.forEach(b => b.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+         const submitBtn = document.getElementById('mark-as-completed');
+        const isCompleted = localStorage.getItem('task1');
+        if(isCompleted === 'false') submitBtn.innerHTML = 'Mark as Completed';
+        else submitBtn.innerHTML = 'Marked as Completed';
+       document.addEventListener('DOMContentLoaded', function() {
+
+    const submitBtn = document.getElementById('mark-as-completed');
+    
+    if (submitBtn) {
+        const isCompleted = localStorage.getItem('task1');
+        if(isCompleted === 'true') { 
+            submitBtn.innerHTML = 'Marked as Completed';
+        } else {
+            submitBtn.innerHTML = 'Mark as Completed';
+        }
+
+        submitBtn.addEventListener('click', function() {
+            console.log("its working priya"); 
+            
+            if(submitBtn.innerHTML === 'Marked as Completed') return;
+            
+            if(localStorage.getItem('loggedInUserName') === 'none') {
+                window.location.href = '/login.html';
+                return; 
+            }
+            
+            localStorage.setItem('task1', 'true'); 
+            localStorage.setItem('easy-count', (parseInt(localStorage.getItem('easy-count') || 0)) + 1);
+            localStorage.setItem('total-count', (parseInt(localStorage.getItem('total-count') || 0)) + 1);
+            
+            const taskTitle = document.querySelector('#description h2').innerHTML;
+            localStorage.setItem('last-submitted', taskTitle);
+            
+            window.location.reload();
+        });
     }
-
-    function showCSS() {
-      document.getElementById("css-code").classList.remove("hide");
-      document.getElementById("html-code").classList.add("hide");
-      document.getElementById("js-code").classList.add("hide");
-
-      const buttons = document.getElementsByClassName("button");
-      buttons[4].classList.add("curr");
-      buttons[3].classList.remove("curr");
-      buttons[5].classList.remove("curr");
-    }
-
-    function showJS() {
-      document.getElementById("js-code").classList.remove("hide");
-      document.getElementById("css-code").classList.add("hide");
-      document.getElementById("html-code").classList.add("hide");
-
-      const buttons = document.getElementsByClassName("button");
-      buttons[5].classList.add("curr");
-      buttons[3].classList.remove("curr");
-      buttons[4].classList.remove("curr");
-    }
-
-    function showHtml1() {
-      document.getElementById("html-code-1").classList.remove("hide");
-      document.getElementById("css-code-1").classList.add("hide");
-      document.getElementById("js-code-1").classList.add("hide");
-
-      const buttons = document.getElementsByClassName("button");
-      buttons[0].classList.add("curr");
-      buttons[1].classList.remove("curr");
-      buttons[2].classList.remove("curr");
-    }
-
-    function showCSS1() {
-      document.getElementById("css-code-1").classList.remove("hide");
-      document.getElementById("html-code-1").classList.add("hide");
-      document.getElementById("js-code-1").classList.add("hide");
-
-      const buttons = document.getElementsByClassName("button");
-      buttons[1].classList.add("curr");
-      buttons[0].classList.remove("curr");
-      buttons[2].classList.remove("curr");
-    }
-
-    function showJS1() {
-      document.getElementById("js-code-1").classList.remove("hide");
-      document.getElementById("css-code-1").classList.add("hide");
-      document.getElementById("html-code-1").classList.add("hide");
-
-      const buttons = document.getElementsByClassName("button");
-      buttons[2].classList.add("curr");
-      buttons[0].classList.remove("curr");
-      buttons[1].classList.remove("curr");
-    }
-
-    function buildUserCode() {
-      const html = document.getElementById("html-code").value;
-      const css = document.getElementById("css-code").value;
-      const js = document.getElementById("js-code").value;
-
-      return `
-        <!DOCTYPE html>
-        <html>
-        <head>
-          <style>${css}</style>
-        </head>
-        <body>
-          ${html}
-          <script>${js.replace(/<\/script>/g, "<\\/script>")}<\/script>
-        </body>
-        </html>
-      `;
-    }
-
-    function runCode() {
-      const userCode = buildUserCode();
-      const iframe = document.getElementById("user-output");
-      iframe.srcdoc = userCode;
-      showTab('output', event);
-
-      if (externalWindow && !externalWindow.closed) {
-        externalWindow.document.open();
-        externalWindow.document.write(userCode);
-        externalWindow.document.close();
-      }
-    }
-
-    function runInNewPage() {
-      const userCode = buildUserCode();
-      externalWindow = window.open();
-      if (externalWindow) {
-        externalWindow.document.open();
-        externalWindow.document.write(userCode);
-        externalWindow.document.close();
-      } else {
-        alert("Popup blocked! Please allow popups for this site.");
-      }
-    }
-
-    function showTab(tabId, event) {
-      const contents = document.querySelectorAll('.tab-content');
-      const buttons = document.querySelectorAll('.left-tab-button');
-      contents.forEach(c => c.classList.remove('active'));
-      buttons.forEach(b => b.classList.remove('active'));
-      document.getElementById(tabId).classList.add('active');
-      event.target.classList.add('active');
-    }
-  </script>
+});
+    </script>
 </body>
 </html>

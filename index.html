@@ -21,9 +21,16 @@
         <div class="App">
             <div class="navbar">
                 <a href="/">
-                    <img class="logo" src="./assets/logo.jpg" />
+                    <img
+                        class="logo"
+                        src="./assets/logo.jpg"
+                    />
                 </a>
-                <div class="menu">
+
+                <div
+                    class="menu"
+                    id="nav-menu"
+                >
                     <a
                         class="nav-link active"
                         id="./Home.html"
@@ -41,15 +48,78 @@
                     >
                     <a
                         class="nav-link"
+                        id="./ContactUs.html"
+                        >Contact Us</a
+                    >
+                    <a
+                        class="nav-link"
                         id="./login.html"
                     ></a>
                     <div id="profile-menu">
-                        <a class="./Profile.html"> My Account </a>
-                        <a>My Favourites</a>
+                        <a class="./Profile.html">My Account</a>
+                        <a class="./favourites.html">My Favourites</a>
                         <a onclick="logout()">Log Out</a>
                     </div>
                 </div>
             </div>
+
+            <div class="mobile-nav">
+                <a href="/">
+                    <img
+                        class="logo"
+                        src="./assets/logo.jpg"
+                    />
+                </a>
+
+                <div
+                    class="hamburger"
+                    onclick="toggleMenu()"
+                >
+                    &#9776;
+                </div>
+
+                <div
+                    class="menu"
+                    id="mob-nav-menu"
+                >
+                    <a
+                        class="nav-link active"
+                        id="./Home.html"
+                        >Home</a
+                    >
+                    <a
+                        class="nav-link"
+                        id="./Tasks.html"
+                        >Practice</a
+                    >
+                    <a
+                        class="nav-link"
+                        id="./Compiler.html"
+                        >Compiler</a
+                    >
+                    <a
+                        class="nav-link"
+                        id="./ContactUs.html"
+                        >Contact Us</a
+                    >
+                    <a
+                        class="nav-link"
+                        id="./Profile.html"
+                        >My Account</a
+                    >
+                    <a
+                        class="nav-link"
+                        id="./favourites.html"
+                        >My Favourites</a
+                    >
+                    <a
+                        class="nav-link"
+                        onclick="logout()"
+                        >Logout</a
+                    >
+                </div>
+            </div>
+
             <iframe
                 src="./Home.html"
                 frameborder="0"
@@ -64,7 +134,7 @@
         <div
             id="chat-popup"
             class="chat-popup"
-            style="display: none;"
+            style="display: none"
         >
             <div class="chat-header">AI Chatbot</div>
             <div
@@ -86,6 +156,30 @@
             </div>
         </div>
         <script>
+            window.addEventListener("resize", function () {
+                document.getElementsByTagName("iframe")[0].style.height =
+                    window.innerHeight - 80 + "px";
+                document.getElementsByTagName("iframe")[0].style.width =
+                    window.innerWidth + "px";
+                document.getElementsByClassName("mobile-nav")[0].style.width =
+                    window.innerWidth + "px";
+            });
+
+            localStorage.setItem("total-count", 0);
+            localStorage.setItem("easy-count", 0);
+            localStorage.setItem("med-count", 0);
+            localStorage.setItem("hard-count", 0);
+            localStorage.setItem("last-submitted", "");
+            localStorage.setItem("fav-task1", -1);
+            localStorage.setItem("fav-task2", -1);
+            localStorage.setItem("fav-task3", -1);
+            localStorage.setItem("fav-task4", -1);
+            localStorage.setItem("fav-task5", -1);
+            localStorage.setItem("fav-task6", -1);
+            localStorage.setItem("fav-task7", -1);
+            localStorage.setItem("fav-task8", -1);
+            localStorage.setItem("fav-task9", -1);
+            localStorage.setItem("task_page", -1);
             const navLinks = document.querySelectorAll(".nav-link");
 
             navLinks.forEach((link) => {
@@ -118,10 +212,18 @@
                 });
             });
 
+            for (let i = 0; i < 9; i++) {
+                if (!localStorage.getItem(`task${i}`))
+                    localStorage.setItem(`task${i}`, false);
+            }
+
             const loginLink = document.getElementById("./login.html");
             const name = localStorage.getItem("loggedInUserName");
-            loginLink.innerHTML = name
-                ? `<svg style="margin-right: 15px;" xmlns="http://www.w3.org/2000/svg" height="30px" viewBox="0 -960 960 960" width="30px" fill="#e3e3e3"><path d="M234-276q51-39 114-61.5T480-360q69 0 132 22.5T726-276q35-41 54.5-93T800-480q0-133-93.5-226.5T480-800q-133 0-226.5 93.5T160-480q0 59 19.5 111t54.5 93Zm246-164q-59 0-99.5-40.5T340-580q0-59 40.5-99.5T480-720q59 0 99.5 40.5T620-580q0 59-40.5 99.5T480-440Zm0 360q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q53 0 100-15.5t86-44.5q-39-29-86-44.5T480-280q-53 0-100 15.5T294-220q39 29 86 44.5T480-160Zm0-360q26 0 43-17t17-43q0-26-17-43t-43-17q-26 0-43 17t-17 43q0 26 17 43t43 17Zm0-60Zm0 360Z"/></svg>${name.split(" ")[0]}`
+            const firstName =
+                name && name.trim() ? name.trim().split(" ")[0] : null;
+
+            loginLink.innerHTML = firstName
+                ? `<svg xmlns="http://www.w3.org/2000/svg" height="30px" viewBox="0 -960 960 960" width="30px" fill="#e3e3e3"><path d="M234-276q51-39 114-61.5T480-360q69 0 132 22.5T726-276q35-41 54.5-93T800-480q0-133-93.5-226.5T480-800q-133 0-226.5 93.5T160-480q0 59 19.5 111t54.5 93Zm246-164q-59 0-99.5-40.5T340-580q0-59 40.5-99.5T480-720q59 0 99.5 40.5T620-580q0 59-40.5 99.5T480-440Zm0 360q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q53 0 100-15.5t86-44.5q-39-29-86-44.5T480-280q-53 0-100 15.5T294-220q39 29 86 44.5T480-160Zm0-360q26 0 43-17t17-43q0-26-17-43t-43-17q-26 0-43 17t-17 43q0 26 17 43t43 17Zm0-60Zm0 360Z"/></svg>`
                 : "Sign in";
 
             loginLink.addEventListener("click", function () {
@@ -133,21 +235,19 @@
             });
 
             function logout() {
-                localStorage.removeItem("loggedInUserName");
+                localStorage.clear();
                 window.location.reload();
             }
 
             const API_KEY =
-                "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";
+                "null";
             const chatToggleBtn = document.getElementById("chat-toggle");
             const chatPopup = document.getElementById("chat-popup");
             const chatBox = document.getElementById("chat-box");
             const userInput = document.getElementById("user-input");
 
-            // Chat state (only in memory)
             const chatHistory = [];
 
-            // Toggle popup
             chatToggleBtn.onclick = () => {
                 chatPopup.style.display =
                     chatPopup.style.display === "none" ? "flex" : "none";
@@ -218,6 +318,21 @@
                 chatBox.appendChild(msgDiv);
                 chatBox.scrollTop = chatBox.scrollHeight;
             }
+
+            function toggleMenu() {
+                const menu = document.getElementById("mob-nav-menu");
+                menu.classList.toggle("show");
+            }
+
+            document.querySelectorAll(".menu a").forEach((link) => {
+                link.addEventListener("click", () => {
+                    document
+                        .getElementById("nav-menu")
+                        .classList.remove("show");
+                    const menu = document.getElementById("mob-nav-menu");
+                    menu.classList.toggle("show");
+                });
+            });
         </script>
     </body>
 </html>

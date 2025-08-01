@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Calculator</title>
+    <title>Credit Card</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
         body {
@@ -156,7 +156,6 @@
         .rp {
             display: flex;
             flex-direction: row;
-            justify-content: space-between;
         }
         
         .run {
@@ -176,45 +175,27 @@
             color: #04153F;
         }
         
-        .mark {
-            width: 100%;
+        .mark-container {
             display: flex;
-            flex-direction: row-reverse;
+            align-items: center;
+            gap: 8px;
+            margin-left: auto;
         }
-        
-        .mk {
-            border: 2px solid rgb(7, 255, 7);
-            width: 150px;
-            background-color: #1E006E;
-            color: rgb(4, 255, 4);
-            font-size: 16px;
-            padding: 10px;
-            border-radius: 5px;
-            cursor: pointer;
-            display: flex;
-            justify-content: center;
-        }
-        
-        .mk:hover {
-            background: #00e791;
-            color: white;
-            border: none;
-        }
-         #mark-as-completed {
-            background-color: #04153F;
-            border: 1px solid #00FF7F;
-            border-radius: 10px;
-            padding: 10px 20px;
+
+        .mark-container label {
             color: #00FF7F;
-            font-weight: 600;
+            font-size: 16px;
+            font-weight: 500;
             cursor: pointer;
         }
-
-        #mark-as-completed:hover {
-            background-color: #00FF7F;
-            color: #1E006E;
+        
+        .mark-container input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+            accent-color: #00FF7F;
         }
-
+        
         #heart{
             width: fit-content;
             height: 30px;
@@ -236,7 +217,7 @@
             justify-content: space-between;
             align-items: center;
         }
-
+        
         @media(max-width:768px) {
             .container {
                 flex-direction: column;
@@ -253,6 +234,25 @@
             textarea {
                 height: 50vh;
             }
+            .mark-container {
+                margin-left: 0;
+                width: 100%;
+                justify-content: flex-end;
+            }
+        }
+        #mark-as-completed {
+            background-color: #04153F;
+            border: 1px solid #00FF7F;
+            border-radius: 10px;
+            padding: 10px 20px;
+            color: #00FF7F;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        #mark-as-completed:hover {
+            background-color: #00FF7F;
+            color: #1E006E;
         }
     </style>
 </head>
@@ -264,24 +264,32 @@
                 <button class="left-tab-button active" onclick="showTab('description', this)">Description</button>
                 <button class="left-tab-button" onclick="showTab('editorial', this)">Editorial</button>
             </div>
+
             <div id="description" class="tab-content active">
-                <div class="heading"><h2>Calculator</h2>
+                
+                <div class="heading"><h2>Debit Card UI</h2>
                 <i id="heart" class="fas fa-heart white-heart"></i></div>
-                <p><strong>Description:</strong><br />You are required to create a basic calculator web application using HTML, CSS, and JavaScript. It should perform simple arithmetic operations like addition, subtraction, multiplication, and division.
-                    Users should be able to input numbers by clicking buttons, and the display should update in real-time without refreshing the page.</p>
+                <p>
+                    <strong>Description:</strong><br/> Your challenge is to create a realistic, non-interactive credit card UI using only HTML and CSS. This project will test your command of advanced CSS, including positioning, gradients, and pseudo-elements,
+                    to replicate a detailed real-world design without relying on any image files for the core components.
+                </p>
+                <h4>Live Demo Preview</h4>
                 <center>
-                    <video autoplay loop muted playsinline width="60%" style="border-radius: 10px; max-width: 300px;">
-                        <source src="./calculator.mp4" type="video/mp4">
-                    </video>
+                    <img src="./media/creditcard.jpg" alt="Credit Card UI Preview" style="width: 80%; border-radius: 10px; max-width: 400px;">
                 </center>
                 <p><strong>Functional Requirements:</strong></p>
                 <ul>
-                    <li>The calculator must support the four basic arithmetic operations: +, -, x, and /.</li>
-                    <li>Inputs must be handled via on-screen buttons.</li>
-                    <li>A 'C' (Clear) button must clear the entire display.</li>
-                    <li>A 'Del' (Delete) button must remove the last character from the display.</li>
-                    <li>An '=' button must evaluate the expression and show the result.</li>
-                    <li>The calculator should handle basic error cases (e.g., division by zero, invalid expressions).</li>
+                    <li>The page must center a single credit card element.</li>
+                    <li>The card must include correctly positioned text for a card number, cardholder name, and expiry date.</li>
+                    <li>You must create a chip icon and a logo (e.g., Mastercard) *using only CSS*. No <img> tags are allowed for the chip or logo.</li>
+                    <li>Use specific fonts like 'Roboto Mono' and 'Poppins' for an authentic look and feel.</li>
+                </ul>
+                <p><strong>Styling Suggestions:</strong></p>
+                <ul>
+                    <li>Use position: absolute to precisely place elements like the chip, logo, and text sections on the card.</li>
+                    <li>Leverage pseudo-elements (::before and ::after) to construct complex shapes like the Mastercard logo without extra HTML.</li>
+                    <li>Use a dark, professional background for the card with light-colored text for strong contrast and readability.</li>
+                    <li>Pay attention to details like font families, letter spacing, and font sizes to match a real credit card.</li>
                 </ul>
             </div>
 
@@ -298,145 +306,165 @@
                     </button>
                     <div class="cp"><button class="copy" onclick="copyCode(this)"><i class="fa-solid fa-copy"></i> Copy</button></div>
                 </div>
-                <textarea id="html-code-2" placeholder="Write HTML here..." disabled>
-<div class="calculator-container">
-    <h1 id="title">Calculator</h1>
-    <input id="display" type="text" readonly>
-    <div id="keys">
-        <button class="btn operator">C</button>
-        <button class="btn operator">Del</button>
-        <button class="btn operator">%</button>
-        <button class="btn operator">/</button>
-        <button class="btn">7</button>
-        <button class="btn">8</button>
-        <button class="btn">9</button>
-        <button class="btn operator">x</button>
-        <button class="btn">4</button>
-        <button class="btn">5</button>
-        <button class="btn">6</button>
-        <button class="btn operator">-</button>
-        <button class="btn">1</button>
-        <button class="btn">2</button>
-        <button class="btn">3</button>
-        <button class="btn operator">+</button>
-        <button class="btn">0</button>
-        <button class="btn">.</button>
-        <button class="btn operator">^</button>
-        <button id="calculate">=</button>
-    </div>
-</div>
+                <textarea id="html-code-2" disabled>
+&lt;div class="card-container"&gt;
+    &lt;div class="card"&gt;
+        &lt;div class="card-chip"&gt;&lt;/div&gt;
+        &lt;div class="card-logo"&gt;
+            &lt;div class="mastercard-icon"&gt;&lt;/div&gt;
+            &lt;span&gt;Master Card&lt;/span&gt;
+        &lt;/div&gt;
+        &lt;div class="card-number-section"&gt;
+            &lt;div class="label"&gt;Card Number&lt;/div&gt;
+            &lt;div class="number"&gt;8050 5040 2030 3020&lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class="card-holder-section"&gt;Prem Kumar Shahi&lt;/div&gt;
+        &lt;div class="card-expiry-section"&gt;
+            &lt;div class="label"&gt;Valid Thru&lt;/div&gt;
+            &lt;div class="date"&gt;05/28&lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
                 </textarea>
-                <textarea id="css-code-2" class="hide" placeholder="Write CSS here..." disabled>
+                <textarea id="css-code-2" class="hide" disabled>
 body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #d1d5db;
     margin: 0;
+}
+
+.card-container {
+    width: 400px;
+    height: 250px;
+}
+
+.card {
+    width: 100%;
+    height: 100%;
+    background-color: #111827;
+    border-radius: 20px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+    position: relative;
+    overflow: hidden;
+    color: #f3f4f6;
+}
+
+.card-chip {
+    position: absolute;
+    top: 30px;
+    right: 30px;
+    width: 50px;
+    height: 40px;
+    background: linear-gradient(135deg, #fde047, #facc15);
+    border-radius: 6px;
+}
+
+.card-chip::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 70%;
+    height: 50%;
+    border: 2px solid #d97706;
+    border-radius: 4px;
+}
+
+.card-logo {
+    position: absolute;
+    top: 30px;
+    left: 30px;
     display: flex;
     align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-    background-color: #f0f0f0;
 }
-.calculator-container {
-    width: 360px;
-    background-color: black;
-    border-radius: 20px;
-    padding: 20px;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+
+.mastercard-icon {
+    width: 50px;
+    height: 50px;
+    position: relative;
 }
-#title {
-    text-align: center;
-    color: rgb(237, 165, 72);
-    font-size: 40px;
-    margin: 10px 0 20px;
-    font-family: sans-serif;
-}
-#display {
-    width: 100%;
-    height: 70px;
-    border: none;
-    background-color: #333;
-    color: white;
-    font-size: 3rem;
-    text-align: right;
-    padding: 10px;
-    box-sizing: border-box;
-    border-radius: 10px;
-    margin-bottom: 20px;
-}
-#keys {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 10px;
-}
-button {
-    height: 70px;
-    width: 70px;
+
+.mastercard-icon::before, .mastercard-icon::after {
+    content: '';
+    position: absolute;
+    width: 35px;
+    height: 35px;
     border-radius: 50%;
-    color: white;
-    background-color: #555;
+}
+
+.mastercard-icon::before {
+    background-color: #ef4444;
+    left: 0;
+}
+
+.mastercard-icon::after {
+    background-color: #f97316;
+    right: 0;
+}
+
+.card-logo span {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.2rem;
+    margin-left: 10px;
+    font-weight: 500;
+}
+
+.card-number-section {
+    position: absolute;
+    bottom: 90px;
+    left: 30px;
+}
+
+.card-number-section .label {
+    font-family: 'Roboto Mono', monospace;
+    font-size: 0.8rem;
+    color: #9ca3af;
+}
+
+.card-number-section .number {
+    font-family: 'Roboto Mono', monospace;
     font-size: 1.5rem;
-    font-weight: bold;
-    cursor: pointer;
-    border: none;
-    transition: background-color 0.2s;
+    letter-spacing: 3px;
+    margin-top: 5px;
 }
-button:hover {
-    background-color: #777;
+
+.card-holder-section {
+    position: absolute;
+    bottom: 30px;
+    left: 30px;
+    font-family: 'Roboto Mono', monospace;
+    font-size: 1.1rem;
 }
-button:active {
-    background-color: #999;
+
+.card-expiry-section {
+    position: absolute;
+    bottom: 30px;
+    right: 30px;
+    text-align: right;
 }
-.operator, #calculate {
-    background-color: rgb(255, 140, 0);
+
+.card-expiry-section .label {
+    font-family: 'Roboto Mono', monospace;
+    font-size: 0.8rem;
+    color: #9ca3af;
 }
-.operator:hover, #calculate:hover {
-    background-color: #ffab40;
+
+.card-expiry-section .date {
+    font-family: 'Roboto Mono', monospace;
+    font-size: 1.1rem;
+    margin-top: 5px;
 }
                 </textarea>
-                <textarea id="js-code-2" class="hide" placeholder="Write JS here..." disabled>
-const display = document.getElementById("display");
-const buttons = document.querySelectorAll("#keys button");
-
-buttons.forEach(button => {
-    button.addEventListener('click', () => {
-        const value = button.innerText;
-        let currentDisplay = display.value;
-
-        // Clear error message on new input
-        if (currentDisplay === 'Error') {
-            currentDisplay = '';
-        }
-
-        if (value === 'C') {
-            display.value = '';
-        } else if (value === 'Del') {
-            display.value = currentDisplay.slice(0, -1);
-        } else if (value === '=') {
-            try {
-                // Replace custom operators with JS equivalents
-                let expression = currentDisplay
-                    .replace(/x/g, '*')
-                    .replace(/\^/g, '');
-                
-                // Use a safer evaluation method than eval()
-                const result = new Function('return ' + expression)();
-                
-                if (isNaN(result) || !isFinite(result)) {
-                   throw new Error("Invalid calculation");
-                }
-                display.value = result;
-            } catch (error) {
-                display.value = 'Error';
-            }
-        } else {
-            display.value = currentDisplay + value;
-        }
-    });
-});
-                </textarea>
+                <textarea id="js-code-2" class="hide" disabled></textarea>
             </div>
         </div>
+
         <div class="right">
-            <h3>🛠 Code Editor</h3>
+            <h3>Code Editor</h3>
             <div class="sec">
                 <button class="html button curr" onclick="showEditorCode('html-code', this)">
                     <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" alt="HTML Logo">HTML
@@ -452,13 +480,14 @@ buttons.forEach(button => {
             <textarea id="css-code" class="hide" placeholder="Write CSS here..."></textarea>
             <textarea id="js-code" class="hide" placeholder="Write JS here..."></textarea>
             <div class="rp">
-                <button onclick="runCode()" class="run">Run</button>
+                <button onclick="runInNewPage()" class="run">Run</button>
                 <div class="mark-container">
                     <button id="mark-as-completed">Mark as Completed</button>
                 </div>
             </div>
         </div>
     </div>
+
     <script>
         let classes = new Array(9);
         let fav_btn = document.querySelector("#heart");
@@ -489,7 +518,7 @@ buttons.forEach(button => {
         }
         function showTab(tabId, buttonElement) {
             const contents = document.querySelectorAll('.left .tab-content');
-            const buttons = document.querySelectorAll('.left .left-tab-button');
+            const buttons = document.querySelectorAll('.left-tab-button');
             contents.forEach(c => c.classList.remove('active'));
             buttons.forEach(b => b.classList.remove('active'));
             document.getElementById(tabId).classList.add('active');
@@ -501,34 +530,34 @@ buttons.forEach(button => {
             textareas.forEach(t => t.classList.add('hide'));
             document.getElementById(codeId).classList.remove('hide');
 
-            const buttons = buttonElement.parentElement.querySelectorAll('.button');
-            buttons.forEach(btn => btn.classList.remove('curr'));
+            const buttons = buttonElement.parentElement.children;
+            for (let btn of buttons) btn.classList.remove('curr');
             buttonElement.classList.add('curr');
         }
-        function runCode() {
-            runInNewPage();
-        }
+
         function showEditorialCode(codeId, buttonElement) {
             const textareas = document.querySelectorAll('#editorial textarea');
             textareas.forEach(t => t.classList.add('hide'));
             document.getElementById(codeId).classList.remove('hide');
 
-            const buttons = buttonElement.parentElement.querySelectorAll('.button');
-            buttons.forEach(btn => btn.classList.remove('curr'));
+            const buttons = buttonElement.parentElement.children;
+            for (let i = 0; i < 3; i++) buttons[i].classList.remove('curr');
             buttonElement.classList.add('curr');
         }
 
         function copyCode(buttonElement) {
             const activeCodeButton = document.querySelector("#editorial .button.curr");
-            const codeType = activeCodeButton.classList[0]; // Gets 'html', 'css', or 'js'
+            const codeType = activeCodeButton.classList[0]; 
+
             const textAreaId = `${codeType}-code-2`;
             const textArea = document.getElementById(textAreaId);
-        
+
             navigator.clipboard.writeText(textArea.value).then(() => {
+                // Provide user feedback
                 buttonElement.innerHTML = '<i class="fa-solid fa-check"></i> Copied!';
                 setTimeout(() => {
                     buttonElement.innerHTML = '<i class="fa-solid fa-copy"></i> Copy';
-                }, 2000);
+                }, 2000); 
             }).catch(err => {
                 console.error('Failed to copy text: ', err);
             });
@@ -543,12 +572,14 @@ buttons.forEach(button => {
                 <!DOCTYPE html>
                 <html>
                 <head>
+                    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;500&family=Poppins:wght@500&display=swap" rel="stylesheet">
+                    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+                    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
                     <style>${css}</style>
                 </head>
                 <body>
                     ${html}
-                    <script>${js.replace(/<\/script>/g, "<\\/script>")}
-                    <\/script>
+                    <script>${js.replace(/<\/script>/g, "<\\/script>")}<\/script>
                 </body>
                 </html>
             `;
@@ -562,16 +593,18 @@ buttons.forEach(button => {
                 alert("Popup blocked! Please allow popups for this site.");
             }
         }
-         const submitBtn = document.getElementById('mark-as-completed');
-        const isCompleted = localStorage.getItem('task5');
+
+       
+        const submitBtn = document.getElementById('mark-as-completed');
+        const isCompleted = localStorage.getItem('task3');
         if(isCompleted === 'false') submitBtn.innerHTML = 'Mark as Completed';
         else submitBtn.innerHTML = 'Marked as Completed';
-       document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function() {
 
     const submitBtn = document.getElementById('mark-as-completed');
     
     if (submitBtn) {
-        const isCompleted = localStorage.getItem('task5');
+        const isCompleted = localStorage.getItem('task3');
         if(isCompleted === 'true') { 
             submitBtn.innerHTML = 'Marked as Completed';
         } else {
@@ -587,8 +620,8 @@ buttons.forEach(button => {
                 return; 
             }
             
-            localStorage.setItem('task5', 'true'); 
-            localStorage.setItem('hard-count', (parseInt(localStorage.getItem('hard-count') || 0)) + 1);
+            localStorage.setItem('task3', 'true'); 
+            localStorage.setItem('easy-count', (parseInt(localStorage.getItem('easy-count') || 0)) + 1);
             localStorage.setItem('total-count', (parseInt(localStorage.getItem('total-count') || 0)) + 1);
             
             const taskTitle = document.querySelector('#description h2').innerHTML;

@@ -93,7 +93,7 @@ body {
 .parent {
     border-radius: 20px;
     display: flex;
-    justify-items: center;
+    justify-content: center;
     align-items: center;
     gap: 20px;
     padding: 20px;
@@ -101,7 +101,7 @@ body {
     flex-wrap: wrap;
 }
 
-.child {
+.child1,.child2,.child3,.child4 {
     border-radius: 20px;
     width: calc(max(45%, 220px));
     height: 200px;
@@ -110,6 +110,80 @@ body {
     flex-direction: column;
     justify-content: center;
     text-align: center;
+    padding: 10px;
+}
+
+.child1{
+    background-color: #fa852bed;
+}
+i{
+    font-size: 70px;
+    color: rgb(255, 255, 255);
+}
+p{
+    font-size: 60px;
+}
+.c1{
+    width: 100%;
+    height: 100svh;
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    align-items: center;
+}
+.c11{
+    width: 50%;
+    height: 100%;
+}
+
+
+.child2{
+    background-color: #5dd7ff;
+}
+.c2{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    align-items: center;
+}
+.c22{
+    width: 50%;
+    height: 100%;
+}
+
+.child3{
+    background-color: 	#dc72ff;
+}
+.c3{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    align-items: center;
+}
+.c33{
+    width: 50%;
+    height: 100%;
+}
+
+
+.child4{
+    background-color: #fb5b7b;
+}
+.c4{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    align-items: center;
+}
+.c44{
+    width: 50%;
+    height: 100%;
 }
 
 @media (max-width: 768px) {

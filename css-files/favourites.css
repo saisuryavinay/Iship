@@ -130,3 +130,14 @@ h2 {
     background-color: #f8d7da;
     color: #d81316;
 }
+.context {
+    font-size: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    opacity: 0.5;
+}
+.hide {
+    display: none;
+}

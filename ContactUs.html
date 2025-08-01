@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - Level up dev</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background: #04153F;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .contact-section {
+            padding: 40px 20px;
+            text-align: center;
+            width: 100%;
+        }
+
+        .contact-section .container {
+            max-width: 600px;
+            margin: auto;
+            background: #121E3A;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 10px;
+        }
+
+        .section-subtitle {
+            color: #d1d5db;
+            margin-bottom: 40px;
+        }
+
+        .contact-form {
+            margin-top: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .contact-form input,
+        .contact-form textarea {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid #4a5568;
+            border-radius: 8px;
+            background-color: #1e293b;
+            color: #e2e8f0;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            box-sizing: border-box;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        .contact-form input::placeholder,
+        .contact-form textarea::placeholder {
+            color: #9ca3af;
+        }
+
+        .contact-form input:focus,
+        .contact-form textarea:focus {
+            outline: none;
+            border-color: #00FFE1;
+            box-shadow: 0 0 0 3px rgba(0, 255, 225, 0.2);
+        }
+
+        .contact-form .btn {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            background-image: linear-gradient(145deg, #00FFF7, #6E00FF);
+            color: #04153F;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .contact-form .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 255, 225, 0.15);
+        }
+
+        #msg {
+            font-weight: 500;
+            display: block;
+            margin-top: 20px;
+            font-size: 1.1rem;
+        }
+    </style>
+</head>
+<body>
+    <div id="contact" class="contact-section">
+        <div class="container">
+            <h2 class="section-title">Get In Touch</h2>
+            <p class="section-subtitle">Have a question or feedback? Leave us a message!</p>
+            <form name="submit-to-google-sheet" class="contact-form">
+                <div class="form-group">
+                    <input type="text" name="Name" placeholder="Your Name" required />
+                </div>
+                <div class="form-group">
+                    <input type="email" name="Email" placeholder="Your Email" required />
+                </div>
+                <div class="form-group">
+                    <textarea name="Message" rows="5" placeholder="Your Message" required></textarea>
+                </div>
+                <button type="submit" class="btn">Send Message</button>
+            </form>
+            <span id="msg"></span>
+        </div>
+    </div>
+    <script>
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbzWhcYBC3qLTXIe56kFb6-6yh9-eAHQKK6iiyiSWygqIUaUL3xZSScvJA9UJKIdP2Vq/exec';
+        const form = document.forms['submit-to-google-sheet'];
+        const msg = document.getElementById("msg");
+
+        form.addEventListener('submit', e => {
+            e.preventDefault();
+            fetch(scriptURL, { method: 'POST', body: new FormData(form) })
+                .then(response => {
+                    msg.innerHTML = "✅ Message sent successfully!";
+                    msg.style.color = "#22c55e"; 
+                    setTimeout(() => msg.innerHTML = "", 5000);
+                    form.reset();
+                })
+                .catch(error => {
+                    msg.innerHTML = "❌ Error sending message!";
+                    msg.style.color = "#ef4444"; 
+                    console.error('Error!', error.message);
+                });
+        });
+    </script>
+</body>
+</html>
