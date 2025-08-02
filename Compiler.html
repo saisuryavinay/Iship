@@ -56,6 +56,14 @@
                 font-weight: bold;
                 cursor: pointer;
                 transition: all 0.3s ease;
+                align-items: center;
+                display: flex;
+                gap: 0.5rem;
+            }
+            
+            .tab-button img {
+                height: 20px;
+                width: auto;
             }
 
             .tab-button.active {
@@ -82,11 +90,11 @@
                 font-size: 1rem;
                 font-family: "Roboto Mono", monospace;
                 border-radius: 8px;
-                display: none; /* Hide all textareas by default */
+                display: none; 
             }
 
             textarea.active {
-                display: block; /* Show only the active one */
+                display: block;
             }
 
             #output-frame {
@@ -120,26 +128,24 @@
                 color: #04153f;
             }
 
-            /* --- Responsive Design for Mobile --- */
             @media (max-width: 768px) {
                 body {
-                    height: auto; /* Allow scrolling on mobile */
+                    height: auto; 
                     overflow: visible;
                 }
                 .container {
-                    flex-direction: column; /* Stack panels vertically */
+                    flex-direction: column;
                     height: auto;
                 }
                 .editor-panel,
                 .output-panel {
                     width: 100%;
-                    height: 50vh; /* Each panel takes half the viewport height */
+                    height: 50vh; 
                 }
                 .panel-title {
                     font-size: 1.2rem;
                 }
                 .editor-panel {
-                    /* Ensure editor panel has a minimum height */
                     min-height: 400px;
                 }
             }
@@ -155,18 +161,21 @@
                         onclick="showCodePanel('html')"
                     >
                         HTML
+                        <img src="./assets/html-5.svg" alt="">
                     </button>
                     <button
                         class="tab-button"
                         onclick="showCodePanel('css')"
                     >
                         CSS
+                        <img src="./assets/css-3.svg" alt="">
                     </button>
                     <button
                         class="tab-button"
                         onclick="showCodePanel('js')"
                     >
                         JS
+                        <img src="./assets/javascript.svg" alt="">
                     </button>
                 </div>
                 <div class="code-editor-area">
@@ -251,16 +260,13 @@
 
             function runLive() {
                 const userCode = buildUserCode();
-                // Update the local iframe
                 outputFrame.srcdoc = userCode;
-                // Send the new code to any other open tabs (like our pop-up)
                 channel.postMessage(userCode);
             }
 
             function runInNewPage() {
                 const userCode = buildUserCode();
 
-                // This is the special code for the new page. It includes a listener.
                 const newPageContent = `
                 <!DOCTYPE html>
                 <html>

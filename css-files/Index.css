@@ -262,6 +262,10 @@ button.send-btn:hover {
     box-shadow: 0 0 10px #00000080;
 }
 
+.hide {
+    display: none;
+}
+
 @media (max-width: 768px) {
     .chat-popup {
         width: 95%;

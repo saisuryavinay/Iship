@@ -103,17 +103,23 @@
                         >Contact Us</a
                     >
                     <a
-                        class="nav-link"
+                        class="nav-link login"
+                        id="./login.html"
+                        >Sign in</a
+                    >
+                    <a
+                        class="nav-link hide"
                         id="./Profile.html"
                         >My Account</a
                     >
                     <a
-                        class="nav-link"
+                        class="nav-link hide"
                         id="./favourites.html"
                         >My Favourites</a
                     >
                     <a
-                        class="nav-link"
+                        class="nav-link hide"
+                        id="logout"
                         onclick="logout()"
                         >Logout</a
                     >
@@ -194,8 +200,9 @@
                 link.addEventListener("click", function (event) {
                     const target = this.getAttribute("id");
                     if (
-                        target === "./login.html" &&
-                        localStorage.getItem("loggedInUserName")
+                        (target === "./login.html" &&
+                        localStorage.getItem("loggedInUserName")) ||
+                        target === 'logout'
                     )
                         return;
                     else document.querySelector("iframe").src = target;
@@ -239,8 +246,7 @@
                 window.location.reload();
             }
 
-            const API_KEY =
-                "null";
+            const API_KEY = "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";
             const chatToggleBtn = document.getElementById("chat-toggle");
             const chatPopup = document.getElementById("chat-popup");
             const chatBox = document.getElementById("chat-box");
@@ -332,6 +338,21 @@
                     const menu = document.getElementById("mob-nav-menu");
                     menu.classList.toggle("show");
                 });
+            });
+
+            window.addEventListener("DOMContentLoaded", function () {
+                if (localStorage.getItem("loggedInUserName")) {
+                    document
+                        .getElementsByClassName("login")[0]
+                        .classList.add("hide");
+                    document
+                        .getElementById("./Profile.html")
+                        .classList.remove("hide");
+                    document
+                        .getElementById("./favourites.html")
+                        .classList.remove("hide");
+                    document.getElementById("logout").classList.remove("hide");
+                }
             });
         </script>
     </body>

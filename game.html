@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CSS Learning Games</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 30px;
+      background-color: #061d44;
+      font-family: 'Segoe UI', sans-serif;
+      color: white;
+    }
+
+    h1 {
+      text-align: center;
+      color: #00ffff;
+      margin-bottom: 40px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 25px;
+    }
+
+    .card {
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      overflow: hidden;
+      color: #000;
+      text-align: center;
+      transition: transform 0.3s ease;
+      padding-bottom: 20px;
+    }
+
+    .card img {
+      width: 100%;
+      height: 260px;
+      object-fit: cover;
+    }
+
+    .title {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin: 12px 0 6px;
+    }
+
+    .badge {
+      display: inline-block;
+      font-size: 0.75rem;
+      padding: 5px 14px;
+      border-radius: 20px;
+      margin-bottom: 10px;
+      color: #fff;
+    }
+
+    .easy { background-color: #28a745; }
+    .medium { background-color: #ffc107; color: #000; }
+    .hard { background-color: #dc3545; }
+
+    .button {
+      display: inline-block;
+      background: #ff5722;
+      color: white;
+      padding: 8px 16px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-size: 0.9rem;
+      margin-top: 10px;
+      transition: background 0.2s;
+    }
+
+    .button:hover {
+      background: #e64a19;
+    }
+  </style>
+</head>
+<body>
+  <h1>CSS Learning Games</h1>
+  <div class="grid">
+    
+    <div class="card">
+      <img src="https://raw.githubusercontent.com/billfienberg/flexbox-froggy/master/gifs/9_of_24.gif" alt="Flexbox Froggy">
+      <div class="title">Flexbox Froggy</div>
+      <div class="badge easy">Easy</div>
+      <a class="button" href="https://flexboxfroggy.com/" target="_blank">Try Now</a>
+    </div>
+
+    <div class="card">
+      <img src="https://raw.githubusercontent.com/vixhnuchandran/flexbox-defense/main/gifs/1.gif" alt="Flexbox Defense">
+      <div class="title">Flexbox Defense</div>
+      <div class="badge easy">Easy</div>
+      <a class="button" href="http://www.flexboxdefense.com/" target="_blank">Try Now</a>
+    </div>
+
+    <div class="card">
+      <img src="https://raw.githubusercontent.com/billfienberg/grid-garden/master/gifs/17_of_28.gif" alt="Grid Garden">
+      <div class="title">Grid Garden</div>
+      <div class="badge medium">Medium</div>
+      <a class="button" href="https://cssgridgarden.com/" target="_blank">Try Now</a>
+    </div>
+
+  </div>
+</body>
+</html>

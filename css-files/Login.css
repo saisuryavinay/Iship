@@ -140,3 +140,62 @@ h1 {
         opacity: none;
     }
 }
+
+
+@media (max-width : 500px) {
+  *{
+    margin: 0;
+  }
+  .text{
+    width: 100%;
+  }
+  .content1 {
+    font-size: 150%;
+  }
+  .content2 {
+    display: none;
+  }
+  .content3{
+    display: block;
+    font-size: 12px;
+  }
+  .signup-main-container {
+    border-radius: 2%;
+    border-bottom-right-radius: 100%;
+    border-bottom-left-radius: 100%;
+  }
+  .signup-container {
+    height: 25%;
+    width: 100%;
+    flex-direction: column;
+  }
+  .container {
+    width: 100%;
+    height: 100%;
+    justify-content: center;  
+    flex-direction: column;
+    border-radius: 0%;
+  }
+  .signin-container {
+    width: 100%;
+    height: 75%;
+  }
+  .normal-btn{
+    padding: 10px 35px;
+    border-radius: 10px;
+    font-size: 14px;
+  }
+  input {
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 14px;
+  }
+  .signin-form, .signup-form{
+    gap: 25px;
+    width: 75%;
+  }
+  h1 {
+    margin-bottom: 15px;
+    text-align: center;
+  }
+}
